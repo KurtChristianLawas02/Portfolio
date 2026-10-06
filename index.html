@@ -1,1067 +1,2850 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Kurt Lawas — IT Graduate & Full-Stack Developer</title>
-    <link rel="icon" type="image/png" href="plogo.jpeg" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root {
-      --bg: #0d0d0d;
-      --bg2: #111111;
-      --bg3: #161616;
-      --border: rgba(255,255,255,0.07);
-      --border-hover: rgba(127,119,221,0.4);
-      --purple: #7F77DD;
-      --purple-light: #AFA9EC;
-      --purple-dim: #534AB7;
-      --purple-glow: rgba(127,119,221,0.12);
-      --text: #e8e8e8;
-      --text-muted: #888;
-      --text-dim: #555;
-      --green: #1D9E75;
-      --green-dim: #0F6E56;
-      --mono: 'JetBrains Mono', monospace;
-      --sans: 'Inter', sans-serif;
-    }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: var(--sans);
-      font-size: 15px;
-      line-height: 1.7;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    /* ── Scrollbar ── */
-    ::-webkit-scrollbar { width: 4px; }
-    ::-webkit-scrollbar-track { background: var(--bg); }
-    ::-webkit-scrollbar-thumb { background: var(--purple-dim); border-radius: 2px; }
-
-    /* ── Nav ── */
-    nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 0 40px;
-      height: 60px;
-      background: rgba(13,13,13,0.85);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border);
-    }
-
-    .nav-logo {
-      font-family: var(--mono);
-      font-size: 14px;
-      color: var(--purple-light);
-      letter-spacing: 0.04em;
-    }
-
-    .nav-links {
-      display: flex; gap: 32px; list-style: none;
-    }
-
-    .nav-links a {
-      font-size: 13px;
-      color: var(--text-muted);
-      text-decoration: none;
-      letter-spacing: 0.02em;
-      transition: color 0.2s;
-    }
-
-    .nav-links a:hover { color: var(--text); }
-
-    .nav-dot {
-      display: flex; align-items: center; gap: 6px;
-      font-family: var(--mono); font-size: 11px; color: var(--green);
-    }
-
-    .dot {
-      width: 7px; height: 7px; border-radius: 50%;
-      background: var(--green);
-      animation: pulse 2s ease-in-out infinite;
-    }
-
-    @keyframes pulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.5; transform: scale(0.85); }
-    }
-
-    /* ── Hero ── */
-    .hero {
-      min-height: 100vh;
-      display: flex; flex-direction: column; justify-content: center;
-      padding: 80px 80px 60px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .hero::before {
-      content: '';
-      position: absolute;
-      width: 480px; height: 480px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(127,119,221,0.09) 0%, transparent 70%);
-      top: 50%; left: 60%; transform: translate(-50%, -50%);
-      pointer-events: none;
-    }
-
-    .hero-eyebrow {
-      font-family: var(--mono);
-      font-size: 12px;
-      color: var(--purple);
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      margin-bottom: 20px;
-      opacity: 0;
-      animation: fadeUp 0.6s ease forwards 0.1s;
-    }
-
-    .hero-name {
-      font-size: clamp(42px, 6vw, 72px);
-      font-weight: 600;
-      line-height: 1.05;
-      letter-spacing: -0.03em;
-      color: #ffffff;
-      opacity: 0;
-      animation: fadeUp 0.6s ease forwards 0.2s;
-    }
-
-    .hero-name span {
-      color: var(--purple-light);
-    }
-
-    .hero-role {
-      font-size: clamp(16px, 2.5vw, 22px);
-      font-weight: 300;
-      color: var(--text-muted);
-      margin-top: 12px;
-      opacity: 0;
-      animation: fadeUp 0.6s ease forwards 0.35s;
-    }
-
-    .hero-bio {
-      max-width: 520px;
-      color: var(--text-muted);
-      font-size: 15px;
-      line-height: 1.8;
-      margin-top: 24px;
-      opacity: 0;
-      animation: fadeUp 0.6s ease forwards 0.45s;
-    }
-
-    .hero-tags {
-      display: flex; flex-wrap: wrap; gap: 8px;
-      margin-top: 28px;
-      opacity: 0;
-      animation: fadeUp 0.6s ease forwards 0.55s;
-    }
-
-    .tag {
-      font-family: var(--mono);
-      font-size: 11px;
-      color: var(--purple-light);
-      background: var(--purple-glow);
-      border: 1px solid rgba(127,119,221,0.25);
-      padding: 4px 12px;
-      border-radius: 4px;
-      letter-spacing: 0.03em;
-    }
-
-    .hero-cta {
-      display: flex; gap: 14px; flex-wrap: wrap;
-      margin-top: 36px;
-      opacity: 0;
-      animation: fadeUp 0.6s ease forwards 0.65s;
-    }
-
-    .btn-primary {
-      padding: 11px 24px;
-      background: var(--purple-dim);
-      color: #fff;
-      font-size: 13px;
-      font-weight: 500;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      text-decoration: none;
-      letter-spacing: 0.02em;
-      transition: background 0.2s, transform 0.15s;
-    }
-
-    .btn-primary:hover { background: var(--purple); transform: translateY(-1px); }
-
-    .btn-ghost {
-      padding: 11px 24px;
-      background: transparent;
-      color: var(--text-muted);
-      font-size: 13px;
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      cursor: pointer;
-      text-decoration: none;
-      letter-spacing: 0.02em;
-      transition: border-color 0.2s, color 0.2s, transform 0.15s;
-    }
-
-    .btn-ghost:hover { border-color: var(--purple-dim); color: var(--text); transform: translateY(-1px); }
-
-    .hero-stats {
-      display: flex; gap: 40px;
-      margin-top: 60px;
-      padding-top: 40px;
-      border-top: 1px solid var(--border);
-      opacity: 0;
-      animation: fadeUp 0.6s ease forwards 0.75s;
-    }
-
-    .stat-num {
-      font-size: 28px;
-      font-weight: 600;
-      color: #fff;
-      line-height: 1;
-    }
-
-    .stat-num span { color: var(--purple); }
-
-    .stat-label {
-      font-size: 12px;
-      color: var(--text-dim);
-      margin-top: 4px;
-      letter-spacing: 0.03em;
-    }
-
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(16px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-    /* ── Section base ── */
-    section {
-      padding: 80px 80px;
-      border-top: 1px solid var(--border);
-    }
-
-    .section-label {
-      font-family: var(--mono);
-      font-size: 11px;
-      color: var(--purple);
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      margin-bottom: 10px;
-    }
-
-    .section-title {
-      font-size: 28px;
-      font-weight: 600;
-      color: #fff;
-      letter-spacing: -0.02em;
-      margin-bottom: 40px;
-    }
-
-    /* ── About ── */
-    .about-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 60px;
-      align-items: start;
-    }
-
-    .about-text p {
-      color: var(--text-muted);
-      margin-bottom: 14px;
-      line-height: 1.85;
-    }
-
-    .about-text p strong { color: var(--text); font-weight: 500; }
-
-    .about-info {
-      display: flex; flex-direction: column; gap: 12px;
-    }
-
-    .info-row {
-      display: flex; justify-content: space-between; align-items: center;
-      padding: 10px 0;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .info-key {
-      font-family: var(--mono);
-      font-size: 11px;
-      color: var(--text-dim);
-      letter-spacing: 0.08em;
-    }
-
-    .info-val {
-      font-size: 13px;
-      color: var(--text);
-      text-align: right;
-    }
-
-    .status-badge {
-      display: inline-flex; align-items: center; gap: 6px;
-      background: rgba(29,158,117,0.1);
-      border: 1px solid rgba(29,158,117,0.25);
-      padding: 4px 10px;
-      border-radius: 20px;
-      font-size: 11px;
-      color: var(--green);
-      font-family: var(--mono);
-    }
-
-    /* ── Skills ── */
-    .skills-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 16px;
-    }
-
-    .skill-card {
-      background: var(--bg2);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 20px;
-      transition: border-color 0.2s, background 0.2s;
-    }
-
-    .skill-card:hover {
-      border-color: var(--border-hover);
-      background: var(--bg3);
-    }
-
-    .skill-card-title {
-      font-size: 12px;
-      font-weight: 500;
-      color: var(--purple-light);
-      letter-spacing: 0.05em;
-      margin-bottom: 14px;
-      text-transform: uppercase;
-      font-family: var(--mono);
-    }
-
-    .skill-list {
-      display: flex; flex-wrap: wrap; gap: 6px;
-    }
-
-    .skill-item {
-      font-size: 12px;
-      color: var(--text-muted);
-      background: rgba(255,255,255,0.04);
-      padding: 3px 9px;
-      border-radius: 4px;
-      border: 1px solid var(--border);
-    }
-
-    /* ── Projects ── */
-    .projects-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 20px;
-    }
-
-    .project-card {
-      background: var(--bg2);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 28px;
-      display: flex; flex-direction: column;
-      transition: border-color 0.2s, transform 0.2s;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .project-card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 2px;
-      background: linear-gradient(90deg, var(--purple-dim), var(--purple-light));
-      opacity: 0;
-      transition: opacity 0.2s;
-    }
-
-    .project-card:hover {
-      border-color: rgba(127,119,221,0.3);
-      transform: translateY(-2px);
-    }
-
-    .project-card:hover::before { opacity: 1; }
-
-    .project-number {
-      font-family: var(--mono);
-      font-size: 11px;
-      color: var(--text-dim);
-      margin-bottom: 14px;
-    }
-
-    .project-title {
-      font-size: 17px;
-      font-weight: 500;
-      color: #fff;
-      margin-bottom: 10px;
-      line-height: 1.3;
-    }
-
-    .project-desc {
-      font-size: 13px;
-      color: var(--text-muted);
-      line-height: 1.75;
-      flex: 1;
-      margin-bottom: 18px;
-    }
-
-    .project-stack {
-      display: flex; flex-wrap: wrap; gap: 6px;
-      margin-bottom: 18px;
-    }
-
-    .stack-pill {
-      font-family: var(--mono);
-      font-size: 10px;
-      color: var(--purple-light);
-      background: var(--purple-glow);
-      padding: 2px 8px;
-      border-radius: 3px;
-      border: 1px solid rgba(127,119,221,0.2);
-    }
-
-    .project-links {
-      display: flex; gap: 10px;
-    }
-
-    .proj-link {
-      font-size: 12px;
-      color: var(--text-muted);
-      text-decoration: none;
-      display: flex; align-items: center; gap: 5px;
-      transition: color 0.2s;
-      letter-spacing: 0.02em;
-    }
-
-    .proj-link:hover { color: var(--purple-light); }
-
-    .proj-link svg { width: 13px; height: 13px; }
-
-    /* ── Experience ── */
-    .timeline {
-      display: flex; flex-direction: column; gap: 0;
-      position: relative;
-    }
-
-    .timeline::before {
-      content: '';
-      position: absolute;
-      left: 5px; top: 6px; bottom: 6px;
-      width: 1px;
-      background: var(--border);
-    }
-
-    .timeline-item {
-      display: flex; gap: 28px;
-      padding-bottom: 36px;
-    }
-
-    .timeline-dot {
-      flex-shrink: 0;
-      width: 11px; height: 11px;
-      border-radius: 50%;
-      background: var(--purple-dim);
-      border: 2px solid var(--bg);
-      margin-top: 5px;
-      position: relative;
-      z-index: 1;
-    }
-    .tl-date {
-      font-family: var(--mono);
-      font-size: 11px;
-      color: var(--text-dim);
-      margin-bottom: 4px;
-    }
-
-    .tl-title {
-      font-size: 16px;
-      font-weight: 500;
-      color: #fff;
-      margin-bottom: 2px;
-    }
-
-    .tl-company {
-      font-size: 13px;
-      color: var(--purple-light);
-      margin-bottom: 10px;
-    }
-
-    .tl-desc {
-      font-size: 13px;
-      color: var(--text-muted);
-      line-height: 1.8;
-    }
-
-    .tl-desc li { margin-bottom: 4px; padding-left: 4px; }
-
-    /* ── Contact ── */
-    .contact-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 60px;
-      align-items: start;
-    }
-
-    .contact-text {
-      color: var(--text-muted);
-      line-height: 1.85;
-      margin-bottom: 24px;
-    }
-
-    .contact-links {
-      display: flex; flex-direction: column; gap: 10px;
-    }
-
-    .contact-link {
-      display: flex; align-items: center; gap: 12px;
-      color: var(--text-muted);
-      text-decoration: none;
-      font-size: 14px;
-      padding: 12px 16px;
-      background: var(--bg2);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      transition: border-color 0.2s, color 0.2s;
-    }
-
-    .contact-link:hover { border-color: var(--border-hover); color: var(--text); }
-
-    .contact-link svg { width: 16px; height: 16px; color: var(--purple-light); flex-shrink: 0; }
-
-    .contact-form {
-      display: flex; flex-direction: column; gap: 14px;
-    }
-
-    .form-row {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
-    }
-
-    .form-group {
-      display: flex; flex-direction: column; gap: 6px;
-    }
-
-    .form-group label {
-      font-size: 11px;
-      color: var(--text-dim);
-      letter-spacing: 0.06em;
-      font-family: var(--mono);
-    }
-
-    .form-group input,
-    .form-group textarea {
-      background: var(--bg2);
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      color: var(--text);
-      font-family: var(--sans);
-      font-size: 14px;
-      padding: 10px 14px;
-      outline: none;
-      transition: border-color 0.2s;
-    }
-
-    .form-group input:focus,
-    .form-group textarea:focus {
-      border-color: var(--purple-dim);
-    }
-
-    .form-group textarea { min-height: 110px; resize: vertical; }
-
-    /* ── Footer ── */
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 28px 80px;
-      display: flex; justify-content: space-between; align-items: center;
-    }
-
-    .footer-text {
-      font-family: var(--mono);
-      font-size: 11px;
-      color: var(--text-dim);
-    }
-
-    .footer-links {
-      display: flex; gap: 20px;
-    }
-
-    .footer-links a {
-      font-size: 12px;
-      color: var(--text-dim);
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-
-    .footer-links a:hover { color: var(--purple-light); }
-
-    /* ── Scroll reveal ── */
-    .reveal {
-      opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 0.6s ease, transform 0.6s ease;
-    }
-
-    .reveal.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    /* ── Responsive ── */
-    @media (max-width: 900px) {
-      nav { padding: 0 24px; }
-      .nav-links { gap: 20px; }
-      .hero { padding: 80px 24px 60px; }
-      section { padding: 60px 24px; }
-      .about-grid, .contact-grid { grid-template-columns: 1fr; gap: 36px; }
-      footer { padding: 24px; flex-direction: column; gap: 12px; text-align: center; }
-    }
-
-    @media (max-width: 600px) {
-      .nav-links { display: none; }
-      .hero-stats { gap: 24px; flex-wrap: wrap; }
-      .form-row { grid-template-columns: 1fr; }
-      .projects-grid { grid-template-columns: 1fr; }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after { animation: none !important; transition: none !important; }
-    }
-  </style>
-</head>
-<body>
-
-  <!-- ── Navigation ── -->
-  <nav>
-    <span class="nav-logo">kurt.lawas</span>
-    <ul class="nav-links">
-      <li><a href="#about">About</a></li>
-      <li><a href="#skills">Skills</a></li>
-      <li><a href="#projects">Projects</a></li>
-      <li><a href="#experience">Experience</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
-    <div class="nav-dot">
-      <span class="dot"></span> Open to work
-    </div>
-  </nav>
-
-  <!-- ── Hero ── -->
-  <section class="hero" id="home">
-    <div class="hero-eyebrow">BSIT Graduate · Cebu, Philippines</div>
-    <h1 class="hero-name">Kurt Christian<br><span>M. Lawas</span></h1>
-    <div class="hero-role">Full-Stack Developer &amp; IT Specialist</div>
-    <p class="hero-bio">
-      I build secure, scalable web applications and provide reliable IT support.
-      Focused on clean code, real-world problem solving, and shipping things that actually work.
-    </p>
-    <div class="hero-tags">
-      <span class="tag">React</span>
-      <span class="tag">Node.js</span>
-      <span class="tag">Express.js</span>
-      <span class="tag">MySQL</span>
-      <span class="tag">Tailwind CSS</span>
-      <span class="tag">Git</span>
-      <span class="tag">JWT Auth</span>
-    </div>
-    <div class="hero-cta">
-      <a href="#projects" class="btn-primary">View Projects</a>
-      <a href="#contact" class="btn-ghost">Get in Touch</a>
-      <a href="#" class="btn-ghost" download>Download Resume</a>
-    </div>
-    <div class="hero-stats">
-      <div>
-        <div class="stat-num">2<span>+</span></div>
-        <div class="stat-label">Full-Stack Projects</div>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Fryja Perez personal portfolio for customer service, virtual assistant, CRM, and administrative support roles."
+    />
+    <title>Fryja Perez | Customer Service Representative</title>
+    <link rel="icon" type="image/png" href="" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --navy-900: #071c2d;
+        --navy-800: #0d2740;
+        --navy-700: #143d5c;
+        --blue-500: #4a90d9;
+        --blue-400: #78b2e8;
+        --cyan-400: #6ed7d3;
+        --slate-100: #f5f7fb;
+        --slate-200: #edf1f7;
+        --slate-300: #dfe7f1;
+        --slate-500: #6f7c8f;
+        --slate-600: #53647a;
+        --slate-800: #1c2d3f;
+        --white: #ffffff;
+        --shadow-soft: 0 18px 45px rgba(8, 24, 38, 0.1);
+        --shadow-card: 0 10px 25px rgba(16, 35, 52, 0.08);
+        --radius-lg: 30px;
+        --radius-md: 18px;
+        --radius-sm: 12px;
+      }
+
+      * { box-sizing: border-box; }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        font-family: 'Inter', sans-serif;
+        background: linear-gradient(180deg, #f7f9fc 0%, #eef3f8 100%);
+        color: var(--slate-800);
+        line-height: 1.7;
+      }
+
+      img {
+        max-width: 100%;
+        display: block;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      .container {
+        width: min(1180px, calc(100% - 32px));
+        margin: 0 auto;
+      }
+
+      .section {
+        padding: 96px 0;
+      }
+
+      .eyebrow {
+        display: inline-block;
+        padding: 8px 14px;
+        background: rgba(74, 144, 217, 0.1);
+        border: 1px solid rgba(74, 144, 217, 0.18);
+        border-radius: 999px;
+        color: var(--navy-700);
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+      }
+
+      .section-heading {
+        margin: 18px 0 32px;
+        font-size: clamp(2rem, 4vw, 3rem);
+        line-height: 1.1;
+        letter-spacing: -0.05em;
+        color: var(--navy-900);
+      }
+
+      .section-subheading {
+        font-size: 1.05rem;
+        color: var(--slate-600);
+        max-width: 700px;
+      }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 15px 26px;
+        border-radius: 12px;
+        border: 1px solid transparent;
+        font-weight: 600;
+        line-height: 1;
+        transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+        cursor: pointer;
+      }
+
+      .btn:hover {
+        transform: translateY(-2px);
+      }
+
+      .btn-primary {
+        background: linear-gradient(135deg, var(--navy-700), var(--blue-500));
+        color: var(--white);
+        box-shadow: 0 12px 24px rgba(20, 61, 92, 0.2);
+      }
+
+      .btn-secondary {
+        background: var(--white);
+        color: var(--navy-800);
+        border-color: rgba(19, 47, 72, 0.12);
+      }
+
+      .site-header {
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        background: rgba(247, 249, 252, 0.8);
+        backdrop-filter: blur(14px);
+        border-bottom: 1px solid rgba(19, 47, 72, 0.08);
+      }
+
+      .nav-wrap {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        min-height: 80px;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--navy-900);
+      }
+
+      .brand-mark {
+        width: 38px;
+        height: 38px;
+        border-radius: 12px;
+        background: linear-gradient(135deg, var(--navy-800), var(--blue-500));
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--white);
+        font-size: 0.8rem;
+        box-shadow: var(--shadow-card);
+      }
+
+      .nav-links {
+        display: flex;
+        align-items: center;
+        gap: 28px;
+        color: var(--slate-600);
+        font-size: 0.92rem;
+      }
+
+      .nav-links a {
+        position: relative;
+        transition: color 0.2s ease;
+      }
+
+      .nav-links a::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: -8px;
+        width: 100%;
+        height: 2px;
+        border-radius: 999px;
+        background: var(--blue-500);
+        transform: scaleX(0);
+        transform-origin: center;
+        transition: transform 0.2s ease;
+      }
+
+      .nav-links a:hover {
+        color: var(--navy-900);
+      }
+
+      .nav-links a:hover::after {
+        transform: scaleX(1);
+      }
+
+      .nav-actions {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+      }
+
+      .availability {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 12px;
+        border-radius: 999px;
+        background: rgba(107, 196, 191, 0.12);
+        border: 1px solid rgba(107, 196, 191, 0.2);
+        color: #0d6b64;
+        font-size: 0.76rem;
+        font-weight: 600;
+      }
+
+      .status-dot {
+        width: 9px;
+        height: 9px;
+        border-radius: 50%;
+        background: #32bf8d;
+        box-shadow: 0 0 0 4px rgba(50, 191, 141, 0.12);
+      }
+
+      .mobile-toggle {
+        display: none;
+        width: 42px;
+        height: 42px;
+        border-radius: 12px;
+        background: var(--white);
+        border: 1px solid rgba(19, 47, 72, 0.1);
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 5px;
+      }
+
+      .mobile-toggle span {
+        display: block;
+        width: 18px;
+        height: 2px;
+        border-radius: 2px;
+        background: var(--navy-900);
+      }
+
+      .hero {
+        padding: 72px 0 56px;
+      }
+
+      .hero-layout {
+        display: grid;
+        grid-template-columns: 1.2fr 0.8fr;
+        align-items: center;
+        gap: 48px;
+      }
+
+      .hero-copy {
+        position: relative;
+        z-index: 1;
+      }
+
+      .hero-name {
+        margin: 18px 0 10px;
+        font-size: clamp(2.8rem, 6vw, 5.25rem);
+        line-height: 0.96;
+        letter-spacing: -0.08em;
+        color: var(--navy-900);
+      }
+
+      .hero-name .accent {
+        display: block;
+        color: var(--blue-500);
+      }
+
+      .hero-role {
+        font-size: clamp(1.2rem, 2vw, 1.7rem);
+        color: var(--slate-600);
+        margin-bottom: 18px;
+        font-weight: 500;
+      }
+
+      .hero-tagline {
+        font-size: 1.02rem;
+        color: var(--slate-600);
+        max-width: 620px;
+      }
+
+      .hero-badges {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 28px;
+      }
+
+      .hero-badges span {
+        padding: 9px 14px;
+        background: rgba(255, 255, 255, 0.7);
+        border: 1px solid rgba(19, 47, 72, 0.08);
+        color: var(--navy-700);
+        border-radius: 999px;
+        font-size: 0.78rem;
+        font-weight: 600;
+      }
+
+      .hero-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 14px;
+        margin-top: 30px;
+      }
+
+      .contact-line {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 26px;
+        margin-top: 28px;
+        color: var(--slate-600);
+        font-size: 0.96rem;
+      }
+
+      .contact-inline {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .contact-inline .icon {
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        background: rgba(74, 144, 217, 0.08);
+        border: 1px solid rgba(74, 144, 217, 0.14);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.8rem;
+        color: var(--navy-700);
+      }
+
+      .profile-panel {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 560px;
+      }
+
+      .profile-card {
+        position: relative;
+        width: min(460px, 100%);
+        border-radius: 36px;
+        background: linear-gradient(180deg, rgba(255,255,255,0.7), rgba(255,255,255,0.95));
+        border: 1px solid rgba(19, 47, 72, 0.08);
+        box-shadow: var(--shadow-soft);
+        padding: 18px;
+      }
+
+      .profile-photo {
+        position: relative;
+        height: 500px;
+        border-radius: 28px;
+        overflow: hidden;
+        background: #e9edf3;
+      }
+
+      .profile-photo img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+
+      .profile-photo::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(180deg, rgba(11, 22, 33, 0.08), rgba(11, 22, 33, 0.18));
+      }
+
+      .floating-badge {
+        position: absolute;
+        right: 18px;
+        top: 18px;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 14px;
+        background: rgba(255,255,255,0.85);
+        border: 1px solid rgba(19, 47, 72, 0.08);
+        border-radius: 999px;
+        color: var(--navy-800);
+        box-shadow: var(--shadow-card);
+        font-size: 0.78rem;
+        font-weight: 600;
+        z-index: 2;
+      }
+
+      .hero-stats {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 18px;
+        margin-top: 32px;
+      }
+
+      .hero-stat {
+        background: rgba(255,255,255,0.72);
+        border: 1px solid rgba(19, 47, 72, 0.08);
+        border-radius: 18px;
+        padding: 18px 16px;
+        box-shadow: var(--shadow-card);
+      }
+
+      .hero-stat strong {
+        display: block;
+        color: var(--navy-900);
+        font-size: 1.1rem;
+        margin-bottom: 6px;
+      }
+
+      .hero-stat span {
+        color: var(--slate-600);
+        font-size: 0.8rem;
+      }
+
+      .about-grid,
+      .contact-grid {
+        display: grid;
+        grid-template-columns: 1.2fr 0.8fr;
+        gap: 34px;
+      }
+
+      .about-panel,
+      .mini-panel,
+      .tool-card,
+      .service-card,
+      .process-item,
+      .sample-card,
+      .cta-panel {
+        background: rgba(255,255,255,0.7);
+        border: 1px solid rgba(19, 47, 72, 0.08);
+        border-radius: var(--radius-md);
+        box-shadow: var(--shadow-card);
+      }
+
+      .about-panel {
+        padding: 30px;
+      }
+
+      .about-panel p {
+        margin: 0 0 18px;
+        color: var(--slate-600);
+        font-size: 1.02rem;
+      }
+
+      .about-panel p:last-child {
+        margin-bottom: 0;
+      }
+
+      .about-panel strong {
+        color: var(--navy-900);
+      }
+
+      .mini-panel {
+        padding: 28px;
+      }
+
+      .snapshot-list {
+        display: grid;
+        gap: 18px;
+        margin-top: 22px;
+      }
+
+      .snapshot-item {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        padding: 12px 0;
+        border-bottom: 1px solid rgba(19, 47, 72, 0.08);
+      }
+
+      .snapshot-item:last-child {
+        border-bottom: 0;
+        padding-bottom: 0;
+      }
+
+      .icon-badge {
+        width: 40px;
+        height: 40px;
+        border-radius: 12px;
+        background: rgba(74, 144, 217, 0.1);
+        border: 1px solid rgba(74, 144, 217, 0.15);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--navy-700);
+        font-size: 1rem;
+      }
+
+      .snapshot-item small {
+        display: block;
+        font-size: 0.72rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--slate-500);
+        margin-bottom: 3px;
+      }
+
+      .snapshot-item span {
+        color: var(--navy-800);
+        font-weight: 600;
+      }
+
+      .skills-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 22px;
+      }
+
+      .skill-card {
+        background: rgba(255,255,255,0.74);
+        border: 1px solid rgba(19, 47, 72, 0.08);
+        border-radius: var(--radius-md);
+        padding: 26px 22px;
+        box-shadow: var(--shadow-card);
+        transition: transform 0.2s ease, border-color 0.2s ease;
+      }
+
+      .skill-card:hover {
+        transform: translateY(-4px);
+        border-color: rgba(74, 144, 217, 0.24);
+      }
+
+      .skill-card-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 18px;
+      }
+
+      .skill-card-header h3 {
+        margin: 0;
+        font-size: 1.05rem;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        color: var(--navy-800);
+      }
+
+      .skill-icon {
+        width: 42px;
+        height: 42px;
+        border-radius: 14px;
+        background: rgba(74, 144, 217, 0.09);
+        color: var(--navy-700);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .skill-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .skill-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: rgba(19, 47, 72, 0.02);
+        border: 1px solid rgba(19, 47, 72, 0.08);
+        border-radius: 10px;
+        padding: 8px 10px;
+        font-size: 0.82rem;
+        color: var(--slate-700);
+      }
+
+      .skill-pill .label {
+        display: inline-flex;
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--blue-500);
+      }
+
+      .level-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 18px;
+      }
+
+      .level-tag {
+        padding: 7px 10px;
+        border-radius: 999px;
+        font-size: 0.7rem;
+        font-weight: 700;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        border: 1px solid transparent;
+      }
+
+      .level-strong { background: rgba(59, 130, 246, 0.08); color: #1d62cf; border-color: rgba(59, 130, 246, 0.2); }
+      .level-experienced { background: rgba(69, 164, 147, 0.1); color: #137164; border-color: rgba(69, 164, 147, 0.22); }
+      .level-familiar { background: rgba(147, 134, 248, 0.08); color: #5a4dc6; border-color: rgba(147, 134, 248, 0.2); }
+      .level-learn { background: rgba(19, 47, 72, 0.04); color: var(--slate-700); border-color: rgba(19, 47, 72, 0.08); }
+
+      .timeline {
+        display: grid;
+        gap: 22px;
+      }
+
+      .timeline-item {
+        position: relative;
+        display: grid;
+        grid-template-columns: 20px 1fr;
+        gap: 18px;
+        padding: 10px 0 10px 0;
+      }
+
+      .timeline-item::before {
+        content: "";
+        position: absolute;
+        left: 8px;
+        top: 0;
+        bottom: 0;
+        width: 2px;
+        background: rgba(19, 47, 72, 0.08);
+      }
+
+      .timeline-dot {
+        position: relative;
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--blue-500), var(--navy-700));
+        border: 3px solid #eef3fa;
+        box-shadow: 0 0 0 4px rgba(74,144,217,0.08);
+        margin-top: 8px;
+        z-index: 1;
+      }
+
+      .timeline-card {
+        background: rgba(255,255,255,0.72);
+        border: 1px solid rgba(19, 47, 72, 0.08);
+        border-radius: var(--radius-md);
+        padding: 22px 24px;
+        box-shadow: var(--shadow-card);
+      }
+
+      .timeline-role {
+        margin: 0 0 6px;
+        font-size: 1.35rem;
+        color: var(--navy-900);
+      }
+
+      .timeline-company {
+        margin: 0 0 10px;
+        color: var(--blue-500);
+        font-weight: 700;
+      }
+
+      .timeline-list {
+        margin: 0;
+        padding-left: 18px;
+        color: var(--slate-600);
+      }
+
+      .timeline-list li {
+        margin-bottom: 8px;
+      }
+
+      .tools-grid,
+      .services-grid,
+      .portfolio-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 22px;
+      }
+
+      .tool-card,
+      .service-card,
+      .sample-card {
+        padding: 24px 22px;
+      }
+
+      .tool-card {
+        overflow: hidden;
+      }
+
+      .tool-thumb,
+      .portfolio-thumb {
+        width: 100%;
+        height: 170px;
+        border-radius: 16px;
+        overflow: hidden;
+        margin-bottom: 18px;
+        border: 1px solid rgba(19, 47, 72, 0.08);
+        background-size: cover;
+        background-position: center;
+      }
+
+      .portfolio-thumb.faq-preview {
+        background: #fff;
+        color: #24364a;
+        display: grid;
+        grid-template-columns: 25% 75%;
+        text-align: left;
+        font-family: Arial, sans-serif;
+      }
+
+      .faq-preview-sidebar {
+        padding: 10px 6px;
+        background: #f7f9fc;
+        border-right: 1px solid #e6ebf1;
+      }
+
+      .faq-preview-brand {
+        margin: 0 0 8px;
+        color: #24364a;
+        font-size: 9px;
+        font-weight: 700;
+      }
+
+      .faq-preview-category {
+        display: block;
+        margin: 2px 0;
+        padding: 4px 5px;
+        border-radius: 4px;
+        color: #53647a;
+        font-size: 6px;
+        line-height: 1.2;
+      }
+
+      .faq-preview-category.active {
+        background: #e5effb;
+        color: #245c9d;
+        font-weight: 700;
+      }
+
+      .faq-preview-main {
+        min-width: 0;
+        padding: 9px 8px;
+      }
+
+      .faq-preview-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 8px;
+      }
+
+      .faq-preview-title {
+        font-size: 8px;
+        font-weight: 700;
+        white-space: nowrap;
+      }
+
+      .faq-preview-search {
+        width: 38%;
+        padding: 3px 5px;
+        border: 1px solid #e4e9f0;
+        border-radius: 4px;
+        color: #8693a2;
+        font-size: 5px;
+      }
+
+      .faq-preview-row {
+        position: relative;
+        margin-bottom: 4px;
+        padding: 5px 15px 5px 6px;
+        border: 1px solid #e5eaf0;
+        border-radius: 4px;
+        line-height: 1.25;
+      }
+
+      .faq-preview-question {
+        overflow: hidden;
+        color: #23374b;
+        font-size: 6px;
+        font-weight: 700;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .faq-preview-answer {
+        overflow: hidden;
+        margin-top: 2px;
+        color: #748194;
+        font-size: 5px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .faq-preview-chevron {
+        position: absolute;
+        top: 50%;
+        right: 6px;
+        color: #738397;
+        font-size: 9px;
+        transform: translateY(-50%);
+      }
+
+      .sample-work-preview {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        border: 1px solid #dce4ed;
+        border-radius: 7px;
+        background: #fff;
+        color: #26394d;
+        font-family: Arial, sans-serif;
+        text-align: left;
+      }
+
+      .sample-work-preview.compact {
+        border-radius: 0;
+        font-size: 6px;
+      }
+
+      .sample-work-preview:not(.compact) {
+        height: 390px;
+        min-height: 370px;
+        border-radius: 10px;
+        font-size: 12px;
+      }
+
+      .sample-appbar {
+        height: 30px;
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        padding: 0 9px;
+        border-bottom: 1px solid #e7ecf1;
+        color: #31465b;
+        font-size: 7px;
+        font-weight: 700;
+      }
+
+      .sample-app-icon {
+        width: 13px;
+        height: 13px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 3px;
+        background: #318b66;
+        color: #fff;
+        font-size: 8px;
+      }
+
+      .sample-app-title {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .sample-appbar-tools {
+        display: flex;
+        gap: 8px;
+        margin-left: auto;
+        color: #748397;
+        font-size: 6px;
+        font-weight: 400;
+      }
+
+      .sample-toolbar {
+        height: 22px;
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        padding: 0 9px;
+        border-bottom: 1px solid #edf0f4;
+        color: #728195;
+        font-size: 6px;
+      }
+
+      .sample-sheet-scroll {
+        width: 100%;
+        height: calc(100% - 52px);
+        overflow: auto;
+      }
+
+      .sample-sheet-table {
+        width: 100%;
+        border-collapse: collapse;
+        table-layout: fixed;
+        color: #37495c;
+      }
+
+      .sample-sheet-table th,
+      .sample-sheet-table td {
+        overflow: hidden;
+        border: 1px solid #e0e7ef;
+        padding: 4px 3px;
+        text-align: left;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .sample-sheet-table th {
+        background: #eaf2fb;
+        color: #33485e;
+        font-weight: 700;
+      }
+
+      .sample-sheet-table td {
+        background: #fff;
+      }
+
+      .sample-sheet-table tr:nth-child(even) td {
+        background: #fbfcfe;
+      }
+
+      .sample-status {
+        display: inline-block;
+        max-width: 100%;
+        overflow: hidden;
+        padding: 2px 4px;
+        border-radius: 5px;
+        text-overflow: ellipsis;
+        vertical-align: middle;
+      }
+
+      .status-complete,
+      .status-resolved {
+        background: #d5f3e4;
+        color: #176a47;
+      }
+
+      .status-pending {
+        background: #fff0bd;
+        color: #79560b;
+      }
+
+      .status-progress {
+        background: #d8eaff;
+        color: #245b9a;
+      }
+
+      .status-scheduled {
+        background: #e3e6ff;
+        color: #4b51a6;
+      }
+
+      .status-high {
+        background: #fde0e0;
+        color: #a43b3b;
+      }
+
+      .status-medium {
+        background: #fff0bd;
+        color: #79560b;
+      }
+
+      .status-low {
+        background: #d5f3e4;
+        color: #176a47;
+      }
+
+      .mail-workspace {
+        display: grid;
+        grid-template-columns: 102px minmax(0, 1fr);
+        height: 320px;
+        min-height: 318px;
+        background: #fff;
+        font-family: Arial, sans-serif;
+      }
+
+      .mail-workspace.compact {
+        grid-template-columns: 25% minmax(0, 1fr);
+        min-height: 0;
+        height: 100%;
+      }
+
+      .mail-sidebar {
+        padding: 10px 6px;
+        border-right: 1px solid #e7ecf1;
+        background: #f7f9fc;
+      }
+
+      .mail-brand {
+        margin: 0 0 8px;
+        color: #23374b;
+        font-size: 8px;
+        font-weight: 700;
+      }
+
+      .mail-compose {
+        margin-bottom: 7px;
+        padding: 5px 7px;
+        border-radius: 5px;
+        background: #e4f1f4;
+        color: #245c69;
+        font-size: 6px;
+        font-weight: 700;
+      }
+
+      .mail-folder {
+        display: flex;
+        justify-content: space-between;
+        gap: 3px;
+        padding: 4px 5px;
+        border-radius: 4px;
+        color: #526479;
+        font-size: 6px;
+      }
+
+      .mail-folder.active {
+        background: #e5effb;
+        color: #245c9d;
+        font-weight: 700;
+      }
+
+      .mail-label-title {
+        margin: 10px 0 3px;
+        padding-left: 5px;
+        color: #8491a0;
+        font-size: 5px;
+        font-weight: 700;
+        letter-spacing: .08em;
+        text-transform: uppercase;
+      }
+
+      .mail-message-area {
+        min-width: 0;
+        overflow: hidden;
+      }
+
+      .mail-toolbar {
+        height: 23px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 7px;
+        border-bottom: 1px solid #e9edf2;
+        color: #768497;
+        font-size: 6px;
+      }
+
+      .mail-tabs {
+        display: flex;
+        gap: 12px;
+        padding: 6px 7px 4px;
+        border-bottom: 1px solid #e9edf2;
+        color: #67778b;
+        font-size: 6px;
+      }
+
+      .mail-tabs .selected {
+        padding-bottom: 4px;
+        border-bottom: 2px solid #397c95;
+        color: #245c69;
+        font-weight: 700;
+      }
+
+      .mail-message {
+        display: grid;
+        grid-template-columns: minmax(52px, 25%) minmax(0, 1fr) 25px;
+        align-items: center;
+        gap: 6px;
+        min-height: 22px;
+        padding: 4px 7px;
+        border-bottom: 1px solid #edf0f4;
+        color: #596a7d;
+        font-size: 6px;
+      }
+
+      .mail-message strong {
+        overflow: hidden;
+        color: #31455a;
+        font-size: inherit;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .mail-message-copy {
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .mail-message-copy b {
+        color: #31455a;
+      }
+
+      .mail-time {
+        color: #718094;
+        text-align: right;
+        white-space: nowrap;
+      }
+
+      .work-sample-dialog {
+        width: min(1180px, 100%);
+        max-height: calc(100vh - 40px);
+        overflow: auto;
+      }
+
+      .work-sample-dialog .modal-image {
+        height: auto;
+        padding: 20px;
+        background: #f8fafc;
+      }
+
+      .faq-dialog {
+        width: min(1180px, 100%);
+        max-height: calc(100vh - 40px);
+        overflow: auto;
+      }
+
+      .faq-dialog .modal-image {
+        height: auto;
+        padding: 20px;
+        background: #f8fafc;
+      }
+
+      .faq-dashboard {
+        min-height: 430px;
+        display: grid;
+        grid-template-columns: 220px minmax(0, 1fr);
+        grid-template-rows: 58px minmax(0, 1fr);
+        overflow: hidden;
+        border: 1px solid #e3e9f0;
+        border-radius: 12px;
+        background: #fff;
+        color: #22364a;
+        font-family: Arial, sans-serif;
+      }
+
+      .faq-dashboard-header {
+        grid-column: 1 / -1;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+        padding: 0 18px;
+        border-bottom: 1px solid #e8edf2;
+      }
+
+      .faq-dashboard-brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 16px;
+        font-weight: 700;
+      }
+
+      .faq-dashboard-mark {
+        width: 28px;
+        height: 28px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 6px;
+        background: #4d8fe0;
+        color: #fff;
+        font-size: 15px;
+      }
+
+      .faq-search-wrap {
+        width: min(280px, 45%);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 10px;
+        border: 1px solid #e4eaf1;
+        border-radius: 7px;
+        background: #fbfcfe;
+        color: #7d8b9a;
+      }
+
+      .faq-search-wrap input {
+        width: 100%;
+        border: 0;
+        outline: 0;
+        background: transparent;
+        color: #273b50;
+        font-size: 11px;
+      }
+
+      .faq-sidebar {
+        padding: 12px;
+        border-right: 1px solid #e8edf2;
+        background: #fcfdff;
+      }
+
+      .faq-category {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        padding: 9px 10px;
+        border: 0;
+        border-radius: 6px;
+        background: transparent;
+        color: #536477;
+        text-align: left;
+        font-size: 11px;
+        cursor: pointer;
+      }
+
+      .faq-category:hover,
+      .faq-category.active {
+        background: #e8f1fb;
+        color: #285e98;
+      }
+
+      .faq-category.active {
+        font-weight: 700;
+      }
+
+      .faq-content {
+        min-width: 0;
+        padding: 18px 20px;
+      }
+
+      .faq-content h4 {
+        margin: 0 0 12px;
+        color: #24364a;
+        font-size: 14px;
+      }
+
+      .faq-entries {
+        display: grid;
+        gap: 5px;
+      }
+
+      .faq-entry {
+        width: 100%;
+        position: relative;
+        display: block;
+        padding: 9px 34px 8px 12px;
+        border: 1px solid #e5eaf0;
+        border-radius: 6px;
+        background: #fff;
+        text-align: left;
+        cursor: pointer;
+      }
+
+      .faq-entry:hover {
+        border-color: #b9d0e9;
+        background: #fcfdff;
+      }
+
+      .faq-entry-question {
+        display: block;
+        margin-bottom: 3px;
+        color: #26394d;
+        font-size: 11px;
+        font-weight: 700;
+      }
+
+      .faq-entry-answer {
+        display: block;
+        color: #708094;
+        font-size: 10px;
+        line-height: 1.45;
+      }
+
+      .faq-entry-chevron {
+        position: absolute;
+        top: 50%;
+        right: 12px;
+        color: #75879a;
+        font-size: 16px;
+        transform: translateY(-50%);
+      }
+
+      .faq-entry[hidden] {
+        display: none;
+      }
+
+      .faq-empty {
+        display: none;
+        padding: 22px;
+        color: #708094;
+        text-align: center;
+        font-size: 12px;
+      }
+
+      .faq-empty.visible {
+        display: block;
+      }
+
+      .tool-header,
+      .service-card-header {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 18px;
+      }
+
+      .tools-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 22px;
+      }
+
+      .tool-category {
+        background: transparent;
+        border: 0;
+        border-radius: 0;
+        padding: 0;
+        box-shadow: none;
+      }
+
+      .tool-category-head {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 18px;
+      }
+
+      .tool-category-head h3 {
+        margin: 0;
+        font-size: 1.05rem;
+        color: var(--navy-900);
+      }
+
+      .tool-entry-list {
+        display: grid;
+        gap: 10px;
+      }
+
+      .tool-entry {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        min-height: 44px;
+        padding: 6px 0;
+        border-bottom: 1px solid rgba(19, 47, 72, 0.06);
+        color: var(--slate-700);
+        font-size: 0.9rem;
+      }
+
+      .tool-entry:last-child {
+        border-bottom: 0;
+      }
+
+      .tool-app-icon {
+        width: 36px;
+        height: 36px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 12px;
+        border: 1px solid rgba(19, 47, 72, 0.08);
+        background: rgba(255,255,255,0.9);
+        color: var(--navy-900);
+        font-size: 0.95rem;
+        font-weight: 800;
+        flex-shrink: 0;
+      }
+
+      .tool-app-icon.amazon {
+        position: relative;
+        background: #0b0b0d;
+        color: #fff;
+        font-size: 1.3rem;
+        font-weight: 900;
+      }
+
+      .tool-app-icon.amazon::after {
+        content: "";
+        position: absolute;
+        left: 8px;
+        right: 8px;
+        bottom: 8px;
+        height: 8px;
+        border-radius: 999px;
+        background: #f5a623;
+        transform: skewY(-12deg);
+      }
+
+      .tool-app-icon.gmail { background: #fff; color: #d93025; }
+      .tool-app-icon.outlook { background: #eaf3ff; color: #0078d4; }
+      .tool-app-icon.teams { background: #e9f5ff; color: #5b5fc7; }
+      .tool-app-icon.meet { background: #ebf7ee; color: #1e8e3e; }
+      .tool-app-icon.chime { background: #f3f0ff; color: #7c4dff; }
+      .tool-app-icon.zoiper { background: #fff4e5; color: #f59e0b; }
+      .tool-app-icon.workspace { background: #eaf4ff; color: #1a73e8; }
+      .tool-app-icon.office { background: #eaf7ff; color: #0f6cbd; }
+      .tool-app-icon.sheets { background: #eafaf0; color: #188038; }
+      .tool-app-icon.excel { background: #eafaf2; color: #107c41; }
+      .tool-app-icon.zoho { background: #eef7ff; color: #0d6efd; }
+      .tool-app-icon.crm { background: #eef5ff; color: #355c9a; }
+
+      .tool-header h3,
+      .service-card h3,
+      .sample-card h3 {
+        margin: 0;
+        font-size: 1.05rem;
+        color: var(--navy-900);
+      }
+
+      .tool-icon,
+      .service-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 12px;
+        background: rgba(74, 144, 217, 0.08);
+        border: 1px solid rgba(74, 144, 217, 0.18);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--navy-700);
+      }
+
+      .tool-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .tool-list span {
+        font-size: 0.76rem;
+        padding: 7px 10px;
+        border-radius: 999px;
+        background: rgba(19, 47, 72, 0.03);
+        border: 1px solid rgba(19, 47, 72, 0.08);
+        color: var(--slate-700);
+      }
+
+      .tool-card p,
+      .service-card p,
+      .sample-card p,
+      .portfolio-meta {
+        margin: 0;
+        font-size: 0.92rem;
+        color: var(--slate-600);
+      }
+
+      .tool-card ul,
+      .service-card ul {
+        margin-top: 18px;
+        padding-left: 18px;
+        color: var(--slate-600);
+      }
+
+      .tool-card li,
+      .service-card li {
+        margin-bottom: 6px;
+      }
+
+      .tools-note {
+        margin-top: 26px;
+        padding: 18px 22px;
+        background: rgba(108, 197, 190, 0.08);
+        border: 1px solid rgba(108, 197, 190, 0.2);
+        border-radius: var(--radius-md);
+        color: var(--navy-800);
+        font-weight: 600;
+      }
+
+      .process-grid {
+        display: grid;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        gap: 18px;
+      }
+
+      .process-item {
+        position: relative;
+        padding: 22px 18px;
+      }
+
+      .process-item::after {
+        content: "";
+        position: absolute;
+        right: -18px;
+        top: 50%;
+        width: 18px;
+        height: 2px;
+        background: rgba(19, 47, 72, 0.1);
+        transform: translateY(-50%);
+      }
+
+      .process-item:last-child::after {
+        display: none;
+      }
+
+      .step-tag {
+        display: inline-block;
+        margin-bottom: 12px;
+        color: var(--blue-500);
+        font-size: 0.72rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        font-weight: 700;
+      }
+
+      .process-item h3 {
+        margin: 0 0 10px;
+        font-size: 1rem;
+        color: var(--navy-900);
+      }
+
+      .process-item p {
+        margin: 0;
+        color: var(--slate-600);
+        font-size: 0.9rem;
+      }
+
+      .sample-card {
+        overflow: hidden;
+      }
+
+      .sample-card button {
+        border: none;
+        background: none;
+        padding: 0;
+        width: 100%;
+        text-align: left;
+        cursor: pointer;
+        color: inherit;
+        font: inherit;
+      }
+
+      .sample-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 18px;
+      }
+
+      .sample-label {
+        padding: 6px 10px;
+        border-radius: 999px;
+        background: rgba(74, 144, 217, 0.07);
+        border: 1px solid rgba(74, 144, 217, 0.15);
+        color: var(--navy-700);
+        font-size: 0.7rem;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+
+      .sample-demo {
+        margin-top: 18px;
+        border: 1px solid rgba(19, 47, 72, 0.08);
+        border-radius: 16px;
+        background: #f8fafc;
+        overflow: hidden;
+      }
+
+      .demo-header {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 12px 14px;
+        border-bottom: 1px solid rgba(19, 47, 72, 0.08);
+        background: rgba(19, 47, 72, 0.02);
+      }
+
+      .demo-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #d6deea;
+      }
+
+      .demo-body {
+        padding: 16px;
+      }
+
+      .table-like {
+        display: grid;
+        gap: 8px;
+      }
+
+      .table-row {
+        display: grid;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        gap: 8px;
+        font-size: 0.7rem;
+      }
+
+      .table-row .cell {
+        background: rgba(19, 47, 72, 0.04);
+        border-radius: 8px;
+        padding: 8px 10px;
+        color: var(--slate-700);
+      }
+
+      .email-list {
+        display: grid;
+        gap: 8px;
+      }
+
+      .email-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        background: rgba(19, 47, 72, 0.04);
+        border-radius: 8px;
+        padding: 9px 10px;
+        font-size: 0.72rem;
+        color: var(--slate-700);
+      }
+
+      .faq-list {
+        display: grid;
+        gap: 8px;
+      }
+
+      .faq-item {
+        background: rgba(19, 47, 72, 0.04);
+        border-radius: 8px;
+        padding: 9px 10px;
+        font-size: 0.72rem;
+        color: var(--slate-700);
+      }
+
+      .why-grid {
+        display: grid;
+        grid-template-columns: 1fr 1.1fr;
+        gap: 24px;
+        align-items: stretch;
+      }
+
+      .checklist {
+        display: grid;
+        gap: 14px;
+        margin: 26px 0 0;
+      }
+
+      .check-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        color: var(--slate-700);
+        font-size: 1rem;
+      }
+
+      .checkmark {
+        width: 22px;
+        height: 22px;
+        border-radius: 50%;
+        background: rgba(53, 173, 111, 0.12);
+        color: #1ea76f;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.8rem;
+        font-weight: 700;
+        flex-shrink: 0;
+      }
+
+      .cta-panel {
+        padding: 30px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      .cta-panel h3 {
+        margin: 0 0 14px;
+        font-size: clamp(1.9rem, 3vw, 2.8rem);
+        line-height: 1.05;
+        letter-spacing: -0.06em;
+        color: var(--navy-900);
+      }
+
+      .cta-panel p {
+        margin: 0;
+        color: var(--slate-600);
+        font-size: 1.02rem;
+      }
+
+      .cta-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 14px;
+        margin-top: 24px;
+      }
+
+      .contact-card {
+        background: rgba(255,255,255,0.7);
+        border: 1px solid rgba(19, 47, 72, 0.08);
+        border-radius: var(--radius-md);
+        box-shadow: var(--shadow-card);
+        padding: 28px;
+      }
+
+      .contact-list {
+        display: grid;
+        gap: 16px;
+        margin-top: 20px;
+      }
+
+      .contact-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        color: var(--slate-700);
+      }
+
+      .contact-item .icon-badge {
+        width: 38px;
+        height: 38px;
+      }
+
+      .modal {
+        position: fixed;
+        inset: 0;
+        background: rgba(7, 28, 45, 0.56);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+        z-index: 2000;
+      }
+
+      .modal.open {
+        display: flex;
+      }
+
+      .modal-dialog {
+        position: relative;
+        width: min(760px, 100%);
+        background: #fff;
+        border-radius: 22px;
+        overflow: hidden;
+        border: 1px solid rgba(19, 47, 72, 0.08);
+        box-shadow: var(--shadow-soft);
+      }
+
+      .modal-dialog.work-sample-dialog,
+      .modal-dialog.faq-dialog {
+        width: min(1180px, 100%);
+        max-height: calc(100vh - 40px);
+        overflow: auto;
+      }
+
+      .modal-image {
+        height: 260px;
+        background-size: cover;
+        background-position: center;
+      }
+
+      .modal-body {
+        padding: 26px 28px 30px;
+      }
+
+      .modal-close {
+        position: absolute;
+        top: 18px;
+        right: 18px;
+        width: 36px;
+        height: 36px;
+        border: none;
+        border-radius: 50%;
+        background: rgba(255,255,255,0.8);
+        font-size: 1.3rem;
+        cursor: pointer;
+      }
+
+      .footer-name {
+        font-weight: 700;
+        color: var(--navy-900);
+      }
+
+      .footer-links {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+        flex-wrap: wrap;
+      }
+
+      .reveal {
+        opacity: 0;
+        transform: translateY(18px);
+        transition: opacity 0.6s ease, transform 0.6s ease;
+      }
+
+      .reveal.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      @media (max-width: 980px) {
+        .nav-links {
+          position: absolute;
+          top: 80px;
+          left: 16px;
+          right: 16px;
+          display: none;
+          padding: 18px;
+          background: rgba(255,255,255,0.92);
+          border: 1px solid rgba(19, 47, 72, 0.08);
+          border-radius: 18px;
+          box-shadow: var(--shadow-card);
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 14px;
+        }
+
+        .nav-links.open {
+          display: flex;
+        }
+
+        .nav-actions .availability {
+          display: none;
+        }
+
+        .mobile-toggle {
+          display: flex;
+        }
+
+        .hero-layout,
+        .about-grid,
+        .contact-grid,
+        .why-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .skills-grid,
+        .tools-grid,
+        .services-grid,
+        .portfolio-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .process-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+
+      @media (max-width: 640px) {
+        .section {
+          padding: 78px 0;
+        }
+
+        .hero {
+          padding-top: 44px;
+        }
+
+        .hero-stats,
+        .skills-grid,
+        .tools-grid,
+        .services-grid,
+        .portfolio-grid,
+        .process-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .contact-line {
+          gap: 12px;
+          flex-direction: column;
+        }
+
+        .nav-wrap {
+          min-height: 72px;
+        }
+
+        .brand {
+          font-size: 0.76rem;
+        }
+
+        .profile-photo {
+          height: 430px;
+        }
+
+        .faq-dialog {
+          max-height: calc(100vh - 20px);
+        }
+
+        .faq-dialog .modal-image {
+          padding: 8px;
+        }
+
+        .work-sample-dialog {
+          max-height: calc(100vh - 20px);
+        }
+
+        .modal-dialog.work-sample-dialog,
+        .modal-dialog.faq-dialog {
+          max-height: calc(100vh - 20px);
+        }
+
+        .work-sample-dialog .modal-image {
+          padding: 8px;
+        }
+
+        .sample-work-preview:not(.compact) {
+          min-height: 310px;
+        }
+
+        .mail-workspace:not(.compact) {
+          min-height: 290px;
+        }
+
+        .faq-dashboard {
+          min-height: 470px;
+          grid-template-columns: 1fr;
+          grid-template-rows: 54px auto minmax(0, 1fr);
+        }
+
+        .faq-dashboard-header {
+          grid-column: 1;
+          padding: 0 10px;
+        }
+
+        .faq-dashboard-brand {
+          font-size: 13px;
+        }
+
+        .faq-search-wrap {
+          width: 52%;
+        }
+
+        .faq-sidebar {
+          display: flex;
+          gap: 4px;
+          overflow-x: auto;
+          padding: 8px;
+          border-right: 0;
+          border-bottom: 1px solid #e8edf2;
+        }
+
+        .faq-category {
+          width: auto;
+          flex: 0 0 auto;
+          padding: 7px 8px;
+          font-size: 9px;
+        }
+
+        .faq-content {
+          padding: 14px 10px;
+        }
+
+        .faq-entry {
+          padding: 8px 25px 8px 9px;
+        }
+
+        .faq-entry-question {
+          font-size: 10px;
+        }
+
+        .faq-entry-answer {
+          font-size: 9px;
+        }
+
+        .footer-wrap {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container nav-wrap">
+        <a href="#home" class="brand" aria-label="Go to home section">
+          <span class="brand-mark">FP</span>
+          <span>Fryja Perez</span>
+        </a>
+
+        <nav class="nav-links" aria-label="Main navigation">
+          <a href="#home">Home</a>
+          <a href="#about">About</a>
+          <a href="#skills">Skills</a>
+          <a href="#experience">Experience</a>
+          <a href="#tools">Tools</a>
+          <a href="#portfolio">Portfolio</a>
+          <a href="#contact">Contact</a>
+        </nav>
+
+        <div class="nav-actions">
+          <span class="availability"><span class="status-dot"></span>Available for Remote Opportunities</span>
+          <a href="#contact" class="btn btn-primary">Let's Work Together</a>
+          <button class="mobile-toggle" aria-label="Toggle navigation" aria-expanded="false">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+        </div>
       </div>
-      <div>
-        <div class="stat-num">1<span>yr</span></div>
-        <div class="stat-label">IT Support Experience</div>
-      </div>
-      <div>
-        <div class="stat-num">10<span>+</span></div>
-        <div class="stat-label">Technologies</div>
-      </div>
-      <div>
-        <div class="stat-num">2026</div>
-        <div class="stat-label">BSIT Graduate</div>
-      </div>
-    </div>
-  </section>
+    </header>
 
-  <!-- ── About ── -->
-  <section id="about">
-    <div class="section-label">01 / About</div>
-    <h2 class="section-title">A little about me</h2>
-    <div class="about-grid reveal">
-      <div class="about-text">
-        <p>
-          I'm a fresh <strong>BSIT graduate from Cebu Eastern College</strong>, passionate about
-          building web applications that are both functional and secure. My capstone was a
-          web-based school news and events system — built from the ground up with a React frontend
-          and a Node.js/Express backend.
-        </p>
-        <p>
-          I've spent time doing real IT support work, which taught me how to stay calm under
-          pressure, diagnose problems fast, and communicate clearly with non-technical users.
-          That experience shapes how I write code — practical, maintainable, and built for
-          real people.
-        </p>
-        <p>
-          Currently seeking <strong>IT Assistant or Full-Stack Developer</strong> roles where
-          I can keep learning and contribute from day one.
-        </p>
-      </div>
-      <div class="about-info">
-        <div class="info-row">
-          <span class="info-key">STATUS</span>
-          <span class="info-val"><span class="status-badge"><span class="dot" style="width:6px;height:6px;background:var(--green);"></span>Open to opportunities</span></span>
-        </div>
-        <div class="info-row">
-          <span class="info-key">DEGREE</span>
-          <span class="info-val">B.S. Information Technology</span>
-        </div>
-        <div class="info-row">
-          <span class="info-key">SCHOOL</span>
-          <span class="info-val">Cebu Eastern College</span>
-        </div>
-        <div class="info-row">
-          <span class="info-key">GRADUATED</span>
-          <span class="info-val">May 2026</span>
-        </div>
-        <div class="info-row">
-          <span class="info-key">LOCATION</span>
-          <span class="info-val">Cebu City, Philippines</span>
-        </div>
-        <div class="info-row">
-          <span class="info-key">EMAIL</span>
-          <span class="info-val" style="color:var(--purple-light);">lawaskc02@gmail.com</span>
-        </div>
-        <div class="info-row">
-          <span class="info-key">GITHUB</span>
-          <span class="info-val" style="color:var(--purple-light);">KurtChristianLawas02</span>
-        </div>
-      </div>
-    </div>
-  </section>
+    <main>
+      <section class="hero" id="home">
+        <div class="container hero-layout">
+          <div class="hero-copy reveal">
+            <span class="eyebrow">Customer Service Representative | Virtual Assistant</span>
+            <h1 class="hero-name">FRYJA <span class="accent">PEREZ</span></h1>
+            <div class="hero-role">Customer Support • Email &amp; Chat Support • CRM • Administrative Assistance</div>
+            <p class="hero-tagline">
+              Helping customers, teams, and businesses stay supported, organized, and productive.
+            </p>
 
-  <!-- ── Skills ── -->
-  <section id="skills">
-    <div class="section-label">02 / Skills</div>
-    <h2 class="section-title">What I work with</h2>
-    <div class="skills-grid reveal">
-      <div class="skill-card">
-        <div class="skill-card-title">Frontend</div>
-        <div class="skill-list">
-          <span class="skill-item">React</span>
-          <span class="skill-item">HTML5</span>
-          <span class="skill-item">CSS3</span>
-          <span class="skill-item">Tailwind CSS</span>
-          <span class="skill-item">Bootstrap</span>
-          <span class="skill-item">EJS</span>
-        </div>
-      </div>
-      <div class="skill-card">
-        <div class="skill-card-title">Backend</div>
-        <div class="skill-list">
-          <span class="skill-item">Node.js</span>
-          <span class="skill-item">Express.js</span>
-          <span class="skill-item">REST APIs</span>
-          <span class="skill-item">JWT Auth</span>
-          <span class="skill-item">bcrypt</span>
-        </div>
-      </div>
-      <div class="skill-card">
-        <div class="skill-card-title">Database</div>
-        <div class="skill-list">
-          <span class="skill-item">MySQL</span>
-          <span class="skill-item">PostgreSQL</span>
-          <span class="skill-item">Aiven</span>
-          <span class="skill-item">XAMPP</span>
-        </div>
-      </div>
-      <div class="skill-card">
-        <div class="skill-card-title">Tools & DevOps</div>
-        <div class="skill-list">
-          <span class="skill-item">Git</span>
-          <span class="skill-item">GitHub</span>
-          <span class="skill-item">VS Code</span>
-          <span class="skill-item">Render</span>
-          <span class="skill-item">Figma</span>
-        </div>
-      </div>
-      <div class="skill-card">
-        <div class="skill-card-title">IT Support</div>
-        <div class="skill-list">
-          <span class="skill-item">Troubleshooting</span>
-          <span class="skill-item">Network Setup</span>
-          <span class="skill-item">OS Installation</span>
-          <span class="skill-item">Hardware Support</span>
-        </div>
-      </div>
-      <div class="skill-card">
-        <div class="skill-card-title">Security</div>
-        <div class="skill-list">
-          <span class="skill-item">Parameterized Queries</span>
-          <span class="skill-item">Signed JWTs</span>
-          <span class="skill-item">RBAC</span>
-          <span class="skill-item">Input Validation</span>
-        </div>
-      </div>
-    </div>
-  </section>
+            <div class="hero-badges">
+              <span>Customer Service</span>
+              <span>Email Support</span>
+              <span>Chat Support</span>
+              <span>CRM</span>
+              <span>Administrative Tasks</span>
+            </div>
 
-  <!-- ── Projects ── -->
-  <section id="projects">
-    <div class="section-label">03 / Projects</div>
-    <h2 class="section-title">Things I've built</h2>
-    <div class="projects-grid reveal">
+            <div class="hero-actions">
+              <a href="#experience" class="btn btn-primary">View My Experience</a>
+              <a href="#contact" class="btn btn-secondary">Let's Work Together</a>
+            </div>
 
-      <div class="project-card">
-        <div class="project-number">01</div>
-        <div class="project-title">CEC Updates Web App</div>
-        <p class="project-desc">
-          A role-based school news and events platform built as my capstone project.
-          Features RBAC for admin/student/faculty, real-time announcements, and a secure
-          Express.js backend with JWT authentication.
-        </p>
-        <div class="project-stack">
-          <span class="stack-pill">React</span>
-          <span class="stack-pill">Node.js</span>
-          <span class="stack-pill">MySQL</span>
-          <span class="stack-pill">JWT</span>
-          <span class="stack-pill">RBAC</span>
-        </div>
-        <div class="project-links">
-          <a href="https://github.com/KurtChristianLawas02" class="proj-link" target="_blank">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
-            GitHub
-          </a>
-        </div>
-      </div>
-
-      <div class="project-card">
-        <div class="project-number">02</div>
-        <div class="project-title">Student Management Information System</div>
-        <p class="project-desc">
-          A full-featured student records management system with enrollment, grading,
-          and reporting modules. Built with Node.js, Express, MySQL, and EJS templating
-          for a server-rendered experience.
-        </p>
-        <div class="project-stack">
-          <span class="stack-pill">Node.js</span>
-          <span class="stack-pill">Express</span>
-          <span class="stack-pill">MySQL</span>
-          <span class="stack-pill">EJS</span>
-        </div>
-        <div class="project-links">
-          <a href="https://github.com/KurtChristianLawas02" class="proj-link" target="_blank">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
-            GitHub
-          </a>
-        </div>
-      </div>
-
-      <div class="project-card">
-        <div class="project-number">02</div>
-        <div class="project-title">Sound and Lights Online Inquiries</div>
-        <p class="project-desc">
-          an online booking platform for renting event equipment such as sound systems,
-           LED walls, lighting, microphones, projectors, and other electronic devices. Customers can
-            easily browse available equipment, check pricing and availability, and book services online. 
-            The platform includes a modern customer portal and an admin dashboard for managing bookings, 
-          inventory, schedules, and payments, providing a seamless and professional event rental experience.
-        </p>
-        <div class="project-stack">
-          <span class="stack-pill">React</span>
-          <span class="stack-pill">Node.js</span>
-          <span class="stack-pill">MySQL</span>
-          <span class="stack-pill">JWT</span>
-          <span class="stack-pill">RBAC</span>
-        </div>
-        <div class="project-links">
-          <a href="https://github.com/KurtChristianLawas02" class="proj-link" target="_blank">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
-            GitHub
-          </a>
-        </div>
-      </div>
-
-      <div class="project-card">
-        <div class="project-number">03</div>
-        <div class="project-title">Ratskie Food and Catering Service Website</div>
-        <p class="project-desc">
-          A full-stack catering booking platform with JWT authentication, admin dashboard,
-          and event management. Deployed on Render with a cloud MySQL database via Aiven.
-        </p>
-        <div class="project-stack">
-          <span class="stack-pill">Node.js</span>
-          <span class="stack-pill">Express</span>
-          <span class="stack-pill">MySQL</span>
-          <span class="stack-pill">Aiven</span>
-          <span class="stack-pill">Render</span>
-          <span class="stack-pill">JWT</span>
-        </div>
-        <div class="project-links">
-          <a href="https://github.com/KurtChristianLawas02" class="proj-link" target="_blank">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
-            GitHub
-          </a>
-          <a href="https://catering-app-5t5q.onrender.com/" class="proj-link">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-            Live Demo
-          </a>
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- ── Experience ── -->
-  <section id="experience">
-    <div class="section-label">04 / Experience</div>
-    <h2 class="section-title">Where I've worked</h2>
-    <div class="timeline reveal">
-
-      <div class="timeline-item">
-        <div class="timeline-dot"></div>
-        <div class="timeline-content">
-          <div class="tl-date">2025 — 2026</div>
-          <div class="tl-title">IT Support Specialist</div>
-          <div class="tl-company">Mahayahay Cockpit - Offline Talpak · Cebu, PH</div>
-          <ul class="tl-desc">
-            <li>Provided first-line hardware, software, and network troubleshooting support.</li>
-            <li>Maintained and configured workstations and network peripherals.</li>
-            <li>Assisted users with OS setup, account provisioning, and system updates.</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="timeline-item">
-        <div class="timeline-dot"></div>
-        <div class="timeline-content">
-          <div class="tl-date">2025</div>
-          <div class="tl-title">OJT Trainee — IT Support</div>
-          <div class="tl-company">Gelacio C. Babao Senior Memorial National High School · Cebu, PH</div>
-          <ul class="tl-desc">
-            <li>Supported the IT department with daily maintenance tasks and user requests.</li>
-            <li>Assisted in network cabling, equipment installation, and inventory management.</li>
-            <li>Gained hands-on experience with troubleshooting in a production environment.</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="timeline-item">
-        <div class="timeline-dot" style="background:var(--green-dim);"></div>
-        <div class="timeline-content">
-          <div class="tl-date">2022 — 2026</div>
-          <div class="tl-title">Bachelor of Science in Information Technology</div>
-          <div class="tl-company" style="color:var(--green);">Cebu Eastern College</div>
-          <p class="tl-desc">
-            Completed a capstone project — a web-based school news and events system.
-            Specialized in full-stack web development, database systems, and IT infrastructure.
-          </p>
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- ── Contact ── -->
-  <section id="contact">
-    <div class="section-label">05 / Contact</div>
-    <h2 class="section-title">Let's work together</h2>
-    <div class="contact-grid reveal">
-
-      <div>
-        <p class="contact-text">
-          I'm actively looking for IT Assistant or Full-Stack Developer roles.
-          If you have a position, a project, or just want to connect — my inbox is open.
-        </p>
-        <div class="contact-links">
-          <a href="mailto:lawaskc02@gmail.com" class="contact-link">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-            lawaskc02@gmail.com
-          </a>
-          <a href="https://github.com/KurtChristianLawas02" target="_blank" class="contact-link">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
-            github.com/KurtChristianLawas02
-          </a>
-          <a href="https://www.linkedin.com/in/kurt-christian-lawas-239b3036b/" target="_blank" class="contact-link">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
-            linkedin.com/in/kurt-christian-lawas-239b3036b/
-          </a>
-        </div>
-      </div>
-
-      <form class="contact-form" onsubmit="handleSubmit(event)">
-        <div class="form-row">
-          <div class="form-group">
-            <label>NAME</label>
-            <input type="text" placeholder="Your name" required />
+            <div class="contact-line">
+              <span class="contact-inline"><span class="icon"></span> </span>
+              <span class="contact-inline"><span class="icon"></span> </span>
+              <span class="contact-inline"><span class="icon"></span> </span>
+            </div>
           </div>
-          <div class="form-group">
-            <label>EMAIL</label>
-            <input type="email" placeholder="your@email.com" required />
+
+          <div class="profile-panel reveal">
+            <div class="profile-card">
+              <div class="floating-badge"><span class="status-dot"></span>Available for Remote Opportunities</div>
+              <div class="profile-photo" role="img" aria-label="Portrait of Fryja Perez">
+                <img src="profile-picture.png" alt="Fryja Perez portrait" />
+              </div>
+            </div>
           </div>
         </div>
-        <div class="form-group">
-          <label>SUBJECT</label>
-          <input type="text" placeholder="Job opportunity / Project / Just saying hi" />
+
+        <div class="container hero-stats reveal">
+          <div class="hero-stat">
+            <strong>2 Years</strong>
+            <span>Customer Service Experience</span>
+          </div>
+          <div class="hero-stat">
+            <strong>Multi-Channel</strong>
+            <span>Phone, email, and chat support</span>
+          </div>
+          <div class="hero-stat">
+            <strong>CRM &amp; Admin</strong>
+            <span>Records, scheduling, and task follow-up</span>
+          </div>
         </div>
-        <div class="form-group">
-          <label>MESSAGE</label>
-          <textarea placeholder="Tell me what you have in mind..."></textarea>
+      </section>
+
+      <section class="section" id="about">
+        <div class="container">
+          <span class="eyebrow">About Me</span>
+          <h2 class="section-heading">Customer-focused. Organized. Ready to support your business.</h2>
+
+          <div class="about-grid reveal">
+            <div class="about-panel">
+              <p>
+                I am a Bachelor’s degree graduate with 2 years of experience in customer service and customer-facing roles.
+                I have experience assisting customers through phone calls, email, and chat support, handling inquiries,
+                  resolving concerns, processing requests, and providing reliable customer assistance. I am also familiar 
+                  with CRM tools, administrative tasks, order tracking, and maintaining accurate customer records. 
+                  I am a responsible, adaptable, and detail-oriented professional who is always willing to learn and improve.              </p>
+              <p>
+                I am organized, adaptable, and comfortable working with different types of customers.
+              </p>
+            </div>
+
+            <aside class="mini-panel">
+              <div class="eyebrow" style="padding: 7px 12px;">Professional Snapshot</div>
+              <div class="snapshot-list">
+                <div class="snapshot-item">
+                  <span class="icon-badge">🎓</span>
+                  <div>
+                    <small>Education</small>
+                    <span>College Graduate</span>
+                  </div>
+                </div>
+                <div class="snapshot-item">
+                  <span class="icon-badge">💼</span>
+                  <div>
+                    <small>Experience</small>
+                    <span>Customer Service Experience</span>
+                  </div>
+                </div>
+                <div class="snapshot-item">
+                  <span class="icon-badge">🎯</span>
+                  <div>
+                    <small>Focus</small>
+                    <span>Customer Support + Virtual Assistance</span>
+                  </div>
+                </div>
+                <div class="snapshot-item">
+                  <span class="icon-badge">📍</span>
+                  <div>
+                    <small>Location</small>
+                    <span>Cebu, Philippines</span>
+                  </div>
+                </div>
+              </div>
+            </aside>
+          </div>
         </div>
-        <button type="submit" class="btn-primary" style="width:fit-content;">Send Message</button>
-        <div id="form-msg" style="font-size:13px;color:var(--green);display:none;margin-top:-4px;">Message sent! I'll get back to you soon.</div>
-      </form>
+      </section>
 
+      <section class="section" id="skills">
+        <div class="container">
+          <span class="eyebrow">My Skills</span>
+          <h2 class="section-heading">Supportive, detail-oriented, and ready to help.</h2>
+
+          <div class="skills-grid reveal">
+            <article class="skill-card">
+              <div class="skill-card-header">
+                <h3>Customer Service</h3>
+                <span class="skill-icon">🎧</span>
+              </div>
+              <div class="skill-list">
+                <span class="skill-pill"><span class="label"></span>Customer Support</span>
+                <span class="skill-pill"><span class="label"></span>Phone Support</span>
+                <span class="skill-pill"><span class="label"></span>Email Support</span>
+                <span class="skill-pill"><span class="label"></span>Chat Support</span>
+                <span class="skill-pill"><span class="label"></span>Complaint Handling</span>
+                <span class="skill-pill"><span class="label"></span>Issue Resolution</span>
+                <span class="skill-pill"><span class="label"></span>Order Management</span>
+                <span class="skill-pill"><span class="label"></span>Account Assistance</span>
+                <span class="skill-pill"><span class="label"></span>Subscription Cancellation</span>
+                <span class="skill-pill"><span class="label"></span>Unauthorized Charge Assistance</span>
+                <span class="skill-pill"><span class="label"></span>Tracking &amp; Follow-up</span>
+              </div>
+              <div class="level-row">
+                <span class="level-tag level-strong">Strong</span>
+                <span class="level-tag level-experienced">Experienced</span>
+              </div>
+            </article>
+
+            <article class="skill-card">
+              <div class="skill-card-header">
+                <h3>Administrative / VA</h3>
+                <span class="skill-icon">🗂️</span>
+              </div>
+              <div class="skill-list">
+                <span class="skill-pill"><span class="label"></span>Data Entry</span>
+                <span class="skill-pill"><span class="label"></span>Email Management</span>
+                <span class="skill-pill"><span class="label"></span>Documentation</span>
+                <span class="skill-pill"><span class="label"></span>Internet Research</span>
+                <span class="skill-pill"><span class="label"></span>File Organization</span>
+                <span class="skill-pill"><span class="label"></span>Scheduling</span>
+                <span class="skill-pill"><span class="label"></span>Record Keeping</span>
+              </div>
+              <div class="level-row">
+                <span class="level-tag level-strong">Strong</span>
+                <span class="level-tag level-familiar">Familiar</span>
+              </div>
+            </article>
+
+            <article class="skill-card">
+              <div class="skill-card-header">
+                <h3>Soft Skills</h3>
+                <span class="skill-icon">🤝</span>
+              </div>
+              <div class="skill-list">
+                <span class="skill-pill"><span class="label"></span>Communication</span>
+                <span class="skill-pill"><span class="label"></span>Active Listening</span>
+                <span class="skill-pill"><span class="label"></span>Problem-Solving</span>
+                <span class="skill-pill"><span class="label"></span>Attention to Detail</span>
+                <span class="skill-pill"><span class="label"></span>Time Management</span>
+                <span class="skill-pill"><span class="label"></span>Adaptability</span>
+                <span class="skill-pill"><span class="label"></span>Multitasking</span>
+              </div>
+              <div class="level-row">
+                <span class="level-tag level-strong">Strong</span>
+                <span class="level-tag level-experienced">Experienced</span>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="experience">
+        <div class="container">
+          <span class="eyebrow">Work Experience</span>
+          <h2 class="section-heading">Professional support experience built on trust and consistency.</h2>
+
+          <div class="timeline reveal">
+            <div class="timeline-item">
+              <div class="timeline-dot"></div>
+              <div class="timeline-card">
+                <p class="timeline-company">Customer Service Representative | Retail Account</p>
+                <h3 class="timeline-role">Customer Service Representative</h3>
+                <ul class="timeline-list">
+                  <li>Assisted customers with account, order, and product-related concerns.</li>
+                  <li>Handled tracking requests and provided updates regarding orders and deliveries.</li>
+                  <li>Assisted with subscription cancellations and account changes.</li>
+                  <li>Investigated unauthorized charges and supported resolution efforts.</li>
+                  <li>Provided support through multiple communication channels while maintaining accurate customer records.</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="timeline-dot"></div>
+              <div class="timeline-card">
+                <p class="timeline-company">Publishing &amp; Client Support</p>
+                <h3 class="timeline-role">Publishing Consultant</h3>
+                <ul class="timeline-list">
+                  <li>Assisted clients with publishing-related inquiries and concerns.</li>
+                  <li>Communicated with clients regarding services, requirements, and project updates.</li>
+                  <li>Followed up with clients and maintained professional communication throughout the process.</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="timeline-dot"></div>
+              <div class="timeline-card">
+                <p class="timeline-company">Financial Transactions &amp; Cash Handling</p>
+                <h3 class="timeline-role">Offline Betting Teller</h3>
+                <ul class="timeline-list">
+                  <li>Processed and recorded customer betting transactions accurately.</li>
+                  <li>Handled cash transactions and verified customer requests.</li>
+                  <li>Maintained accurate transaction records and followed established procedures.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="tools">
+        <div class="container">
+          <span class="eyebrow">Tools &amp; CRM</span>
+          <h2 class="section-heading">Tools I work with to keep service smooth and organized.</h2>
+
+          <div class="tools-grid reveal">
+            <div class="tool-category">
+              <div class="tool-category-head">
+                <span class="tool-icon">🧾</span>
+                <h3>Customer Service / CRM</h3>
+              </div>
+              <div class="tool-entry-list">
+                <div class="tool-entry"><span class="tool-app-icon amazon" aria-label="Amazon">A</span><span>Amazon Internal CRM Tool</span></div>
+                <div class="tool-entry"><span class="tool-app-icon zoho" aria-label="Zoho">Z</span><span>Zoho</span></div>
+              </div>
+            </div>
+
+            <div class="tool-category">
+              <div class="tool-category-head">
+                <span class="tool-icon">💬</span>
+                <h3>Communication</h3>
+              </div>
+              <div class="tool-entry-list">
+                <div class="tool-entry"><span class="tool-app-icon gmail" aria-label="Gmail">G</span><span>Gmail</span></div>
+                <div class="tool-entry"><span class="tool-app-icon outlook" aria-label="Outlook">O</span><span>Outlook</span></div>
+                <div class="tool-entry"><span class="tool-app-icon teams" aria-label="Microsoft Teams">T</span><span>Microsoft Teams</span></div>
+                <div class="tool-entry"><span class="tool-app-icon meet" aria-label="Google Meet">M</span><span>Google Meet</span></div>
+                <div class="tool-entry"><span class="tool-app-icon chime" aria-label="Chime">C</span><span>Chime</span></div>
+                <div class="tool-entry"><span class="tool-app-icon zoiper" aria-label="Zoiper">Z</span><span>Zoiper</span></div>
+              </div>
+            </div>
+
+            <div class="tool-category">
+              <div class="tool-category-head">
+                <span class="tool-icon">📊</span>
+                <h3>Productivity</h3>
+              </div>
+              <div class="tool-entry-list">
+                <div class="tool-entry"><span class="tool-app-icon workspace" aria-label="Google Workspace">G</span><span>Google Workspace</span></div>
+                <div class="tool-entry"><span class="tool-app-icon office" aria-label="Microsoft Office">O</span><span>Microsoft Office</span></div>
+                <div class="tool-entry"><span class="tool-app-icon sheets" aria-label="Google Sheets">S</span><span>Google Sheets</span></div>
+                <div class="tool-entry"><span class="tool-app-icon excel" aria-label="Microsoft Excel">X</span><span>Microsoft Excel</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="tools-note reveal">
+            Comfortable learning new platforms, CRM systems, and company-specific tools.
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="support">
+        <div class="container">
+          <span class="eyebrow">How I Can Support Your Business</span>
+          <h2 class="section-heading">Reliable support for your customers, operations, and daily tasks.</h2>
+
+          <div class="services-grid reveal">
+            <article class="service-card">
+              <div class="service-card-header">
+                <span class="service-icon">☎</span>
+                <h3>Customer Support</h3>
+              </div>
+              <p>Phone, email, and chat-based customer assistance.</p>
+            </article>
+
+            <article class="service-card">
+              <div class="service-card-header">
+                <span class="service-icon">✉</span>
+                <h3>Email Management</h3>
+              </div>
+              <p>Organizing, responding to, and following up on emails.</p>
+            </article>
+
+            <article class="service-card">
+              <div class="service-card-header">
+                <span class="service-icon">📝</span>
+                <h3>Data Entry</h3>
+              </div>
+              <p>Accurate data input, updating records, and maintaining information.</p>
+            </article>
+
+            <article class="service-card">
+              <div class="service-card-header">
+                <span class="service-icon">📅</span>
+                <h3>Administrative Support</h3>
+              </div>
+              <p>Documentation, scheduling, file organization, and daily administrative tasks.</p>
+            </article>
+
+            <article class="service-card">
+              <div class="service-card-header">
+                <span class="service-icon">🔔</span>
+                <h3>Customer Follow-Up</h3>
+              </div>
+              <p>Tracking requests, callbacks, and customer concerns.</p>
+            </article>
+
+            <article class="service-card">
+              <div class="service-card-header">
+                <span class="service-icon">🔎</span>
+                <h3>Internet Research</h3>
+              </div>
+              <p>Finding, organizing, and documenting relevant information.</p>
+            </article>
+          </div>
+
+          <div class="cta-actions reveal" style="margin-top: 28px;">
+            <span style="font-size: 1.02rem; color: var(--navy-900); font-weight: 600;">Need help with customer support or administrative tasks?</span>
+            <a href="#contact" class="btn btn-primary">Let's Talk</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="process">
+        <div class="container">
+          <span class="eyebrow">My Work Process</span>
+          <h2 class="section-heading">How I handle tasks with care, clarity, and consistency.</h2>
+
+          <div class="process-grid reveal">
+            <article class="process-item">
+              <span class="step-tag">Step 01</span>
+              <h3>Understand</h3>
+              <p>Understand the task, customer concern, or business requirement.</p>
+            </article>
+            <article class="process-item">
+              <span class="step-tag">Step 02</span>
+              <h3>Organize</h3>
+              <p>Collect the necessary information and organize priorities.</p>
+            </article>
+            <article class="process-item">
+              <span class="step-tag">Step 03</span>
+              <h3>Execute</h3>
+              <p>Complete the task accurately and professionally.</p>
+            </article>
+            <article class="process-item">
+              <span class="step-tag">Step 04</span>
+              <h3>Follow Up</h3>
+              <p>Make sure the concern or task has been properly resolved.</p>
+            </article>
+            <article class="process-item">
+              <span class="step-tag">Step 05</span>
+              <h3>Document</h3>
+              <p>Keep records organized for future reference.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="portfolio">
+        <div class="container">
+          <span class="eyebrow">Sample Work</span>
+          <h2 class="section-heading">Practical examples of how I organize, support, and communicate.</h2>
+
+          <div class="portfolio-grid reveal">
+            <article class="sample-card">
+              <button type="button" data-open-modal="order-tracking">
+                <div class="sample-header">
+                  <h3>Order Tracking System</h3>
+                  <span class="sample-label">Demo Project</span>
+                </div>
+                <div class="portfolio-thumb" data-preview="order-tracking" aria-hidden="true"></div>
+                <p>Sample workflow for tracking customer orders, delivery updates, and follow-ups.</p>
+              </button>
+            </article>
+
+            <article class="sample-card">
+              <button type="button" data-open-modal="customer-emails">
+                <div class="sample-header">
+                  <h3>Sample Customer Emails</h3>
+                  <span class="sample-label">Demo Project</span>
+                </div>
+                <div class="portfolio-thumb" data-preview="customer-emails" aria-hidden="true"></div>
+                <p>Professional customer communication templates for common support situations.</p>
+              </button>
+            </article>
+
+            <article class="sample-card">
+              <button type="button" data-open-modal="callback-tracker">
+                <div class="sample-header">
+                  <h3>Callback Tracker</h3>
+                  <span class="sample-label">Demo Project</span>
+                </div>
+                <div class="portfolio-thumb" data-preview="callback-tracker" aria-hidden="true"></div>
+                <p>Spreadsheet-style dashboard to track customer contact dates and resolutions.</p>
+              </button>
+            </article>
+
+            <article class="sample-card">
+              <button type="button" data-open-modal="support-ticket">
+                <div class="sample-header">
+                  <h3>Customer Support Ticket Tracker</h3>
+                  <span class="sample-label">Demo Project</span>
+                </div>
+                <div class="portfolio-thumb" data-preview="support-ticket" aria-hidden="true"></div>
+                <p>Sample ticket management interface for issue tracking and ownership.</p>
+              </button>
+            </article>
+
+            <article class="sample-card">
+              <button type="button" data-open-modal="faq">
+                <div class="sample-header">
+                  <h3>Customer Service FAQ</h3>
+                  <span class="sample-label">Demo Project</span>
+                </div>
+                <div class="portfolio-thumb faq-preview" aria-label="Preview of a customer FAQ help center">
+                  <div class="faq-preview-sidebar">
+                    <div class="faq-preview-brand">FAQ</div>
+                    <span class="faq-preview-category active">⌂ &nbsp; All</span>
+                    <span class="faq-preview-category">▣ &nbsp; Orders &amp; Shipping</span>
+                    <span class="faq-preview-category">↩ &nbsp; Returns &amp; Refunds</span>
+                    <span class="faq-preview-category">▤ &nbsp; Subscriptions</span>
+                    <span class="faq-preview-category">♙ &nbsp; Account &amp; Login</span>
+                    <span class="faq-preview-category">▧ &nbsp; Payments &amp; Billing</span>
+                  </div>
+                  <div class="faq-preview-main">
+                    <div class="faq-preview-top">
+                      <span class="faq-preview-title">Frequently Asked Questions</span>
+                      <span class="faq-preview-search">⌕ &nbsp; Search for a question...</span>
+                    </div>
+                    <div class="faq-preview-row">
+                      <div class="faq-preview-question">How do I track my order?</div>
+                      <div class="faq-preview-answer">Visit Order History to view your tracking number and delivery updates.</div>
+                      <span class="faq-preview-chevron">›</span>
+                    </div>
+                    <div class="faq-preview-row">
+                      <div class="faq-preview-question">How can I cancel my subscription?</div>
+                      <div class="faq-preview-answer">Go to account settings, choose Subscriptions, then select Manage.</div>
+                      <span class="faq-preview-chevron">›</span>
+                    </div>
+                    <div class="faq-preview-row">
+                      <div class="faq-preview-question">What should I do if I don't recognize a charge?</div>
+                      <div class="faq-preview-answer">Contact support so the charge can be reviewed and investigated.</div>
+                      <span class="faq-preview-chevron">›</span>
+                    </div>
+                  </div>
+                </div>
+                <p>Searchable FAQ with sample customer questions and clear professional responses.</p>
+              </button>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="contact">
+        <div class="container">
+          <span class="eyebrow">Why Work With Me?</span>
+          <h2 class="section-heading">Reliable support for customers, operations, and remote work.</h2>
+
+          <div class="why-grid reveal">
+            <div class="contact-card">
+              <ul class="checklist">
+                <li class="check-item"><span class="checkmark">✓</span>Customer service experience</li>
+                <li class="check-item"><span class="checkmark">✓</span>Experience handling phone, email, and chat concerns</li>
+                <li class="check-item"><span class="checkmark">✓</span>Comfortable assisting different types of customers</li>
+                <li class="check-item"><span class="checkmark">✓</span>Strong communication and problem-solving skills</li>
+                <li class="check-item"><span class="checkmark">✓</span>Organized and detail-oriented</li>
+                <li class="check-item"><span class="checkmark">✓</span>Quick to learn new tools and processes</li>
+                <li class="check-item"><span class="checkmark">✓</span>Able to work independently and follow procedures</li>
+              </ul>
+            </div>
+
+            <div class="cta-panel">
+              <h3>Let's Work Together</h3>
+              <p>
+                Looking for someone reliable to support your customers, manage administrative tasks, and help keep your daily operations organized?
+              </p>
+              <div class="cta-actions">
+                <a href="mailto:pfryja@gmail.com" class="btn btn-primary">Email Me</a>
+                <a href="https://www.linkedin.com/in/fryja-perez-66574b376/?utm_source=share_via&utm_content=profile&utm_medium=member_android" target="_blank" rel="noreferrer" class="btn btn-secondary">Connect on LinkedIn</a>
+              </div>
+
+              <div class="contact-list">
+                <div class="contact-item"><span class="icon-badge">✉</span><span>pfryja@gmail.com</span></div>
+                <div class="contact-item"><span class="icon-badge">☎</span><span>09240440343 • WhatsApp, Viber, Telegram</span></div>
+                <div class="contact-item"><span class="icon-badge">💼</span><span>linkedin.com/in/fryja-perez-66574b376</span></div>
+                <div class="contact-item"><span class="icon-badge">📍</span><span>Cebu, Philippines</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <div class="modal" id="portfolio-modal" aria-hidden="true">
+      <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+        <button class="modal-close" type="button" aria-label="Close modal">×</button>
+        <div class="modal-image" id="modal-image"></div>
+        <div class="modal-body">
+          <span class="eyebrow" id="modal-tag">Demo Project</span>
+          <h3 style="margin: 18px 0 12px; font-size: clamp(1.6rem, 3vw, 2.3rem); color: var(--navy-900);" id="modal-title">Project</h3>
+          <p id="modal-text" style="margin: 0; color: var(--slate-600); line-height: 1.8; font-size: 0.98rem;"></p>
+        </div>
+      </div>
     </div>
-  </section>
 
-  <!-- ── Footer ── -->
-  <footer>
-    <span class="footer-text">© 2026 Kurt Christian M. Lawas · Built with HTML, CSS &amp; JS</span>
-    <div class="footer-links">
-      <a href="https://github.com/KurtChristianLawas02" target="_blank">GitHub</a>
-      <a href="#" target="_blank">LinkedIn</a>
-      <a href="#home">Back to top ↑</a>
-    </div>
-  </footer>
+    <template id="order-tracking-template">
+      <div class="sample-work-preview sheet-preview">
+        <div class="sample-appbar">
+          <span class="sample-app-icon">▦</span>
+          <span class="sample-app-title">Order Tracking Project</span>
+          <span class="sample-appbar-tools"><span>File</span><span>Edit</span><span>View</span><span>Insert</span><span>Data</span></span>
+        </div>
+        <div class="sample-toolbar"><span>↶</span><span>↷</span><span>100%</span><span>Arial</span><span>10</span><span>B</span><span>▤</span><span>⋮</span></div>
+        <div class="sample-sheet-scroll">
+          <table class="sample-sheet-table">
+            <thead><tr><th>Order #</th><th>Customer Name</th><th>Date Ordered</th><th>Product</th><th>Order Status</th><th>Tracking Number</th><th>Last Updated</th></tr></thead>
+            <tbody>
+              <tr><td>LS-1001</td><td>Ana Reyes</td><td>Oct 1, 2025</td><td>Wireless Earbuds</td><td><span class="sample-status status-pending">Processing</span></td><td>—</td><td>Oct 1</td></tr>
+              <tr><td>LS-1002</td><td>Mark Villanueva</td><td>Sep 30, 2025</td><td>Gaming Mouse</td><td><span class="sample-status status-progress">Shipped</span></td><td>TRK123456789</td><td>Oct 2</td></tr>
+              <tr><td>LS-1003</td><td>Ella Garcia</td><td>Sep 28, 2025</td><td>Backpack</td><td><span class="sample-status status-progress">In Transit</span></td><td>TRK987654321</td><td>Oct 3</td></tr>
+              <tr><td>LS-1004</td><td>John Dela Cruz</td><td>Sep 27, 2025</td><td>Smart Watch</td><td><span class="sample-status status-complete">Delivered</span></td><td>TRK456789123</td><td>Oct 1</td></tr>
+              <tr><td>LS-1005</td><td>Faith Santos</td><td>Sep 26, 2025</td><td>Laptop Stand</td><td><span class="sample-status status-progress">In Transit</span></td><td>TRK741852963</td><td>Oct 3</td></tr>
+              <tr><td>LS-1006</td><td>Kyle Mendoza</td><td>Sep 25, 2025</td><td>Phone Case</td><td><span class="sample-status status-complete">Delivered</span></td><td>TRK369258147</td><td>Sep 30</td></tr>
+              <tr><td>LS-1007</td><td>Patricia Lim</td><td>Sep 24, 2025</td><td>Bluetooth Speaker</td><td><span class="sample-status status-pending">Returned</span></td><td>TRK852963741</td><td>Oct 2</td></tr>
+              <tr><td>LS-1008</td><td>Miguel Torres</td><td>Sep 23, 2025</td><td>Keyboard</td><td><span class="sample-status status-pending">Processing</span></td><td>—</td><td>Sep 23</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </template>
 
-  <script>
-    // Scroll reveal
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          e.target.classList.add('visible');
-          observer.unobserve(e.target);
+    <template id="customer-emails-template">
+      <div class="sample-work-preview mail-workspace">
+        <aside class="mail-sidebar">
+          <div class="mail-brand">Support Desk</div>
+          <div class="mail-compose">＋ New message</div>
+          <div class="mail-folder active"><span>▣ &nbsp; Inbox</span><b>12</b></div>
+          <div class="mail-folder"><span>◷ &nbsp; Follow-ups</span><b>4</b></div>
+          <div class="mail-folder"><span>↗ &nbsp; Sent</span></div>
+          <div class="mail-folder"><span>▱ &nbsp; Drafts</span><b>3</b></div>
+          <div class="mail-label-title">Queues</div>
+          <div class="mail-folder">● &nbsp; Orders</div>
+          <div class="mail-folder">● &nbsp; Billing</div>
+          <div class="mail-folder">● &nbsp; Account Help</div>
+        </aside>
+        <div class="mail-message-area">
+          <div class="mail-toolbar"><span>☰ &nbsp; All messages &nbsp;⌄</span><span>Search messages　⌕</span><span>1–6 of 24</span></div>
+          <div class="mail-tabs"><span class="selected">All messages</span><span>Needs reply</span><span>Resolved</span></div>
+          <div class="mail-message"><strong>Maria Santos</strong><span class="mail-message-copy"><b>Order update — LS-1002</b>　Your tracking details are ready for review...</span><span class="mail-time">10:24</span></div>
+          <div class="mail-message"><strong>James Reyes</strong><span class="mail-message-copy"><b>Refund request follow-up</b>　I wanted to check on the status of my refund...</span><span class="mail-time">09:50</span></div>
+          <div class="mail-message"><strong>Liza Cruz</strong><span class="mail-message-copy"><b>Subscription cancellation</b>　Thanks for confirming the cancellation...</span><span class="mail-time">Yesterday</span></div>
+          <div class="mail-message"><strong>Ken Dela Cruz</strong><span class="mail-message-copy"><b>Account access help</b>　I can now sign in to my account. Thank you...</span><span class="mail-time">Yesterday</span></div>
+          <div class="mail-message"><strong>Angelica Lim</strong><span class="mail-message-copy"><b>Billing question</b>　Could you help me understand this charge...</span><span class="mail-time">Oct 4</span></div>
+          <div class="mail-message"><strong>Rafael Tan</strong><span class="mail-message-copy"><b>Delivery follow-up</b>　My order arrived today, thank you for your help...</span><span class="mail-time">Oct 3</span></div>
+          <div class="mail-message"><strong>Sophie Garcia</strong><span class="mail-message-copy"><b>Replacement item request</b>　One item was missing from my delivery...</span><span class="mail-time">Oct 3</span></div>
+          <div class="mail-message"><strong>Daniel Park</strong><span class="mail-message-copy"><b>Payment confirmation</b>　I have completed the payment. Please confirm...</span><span class="mail-time">Oct 2</span></div>
+          <div class="mail-message"><strong>Paula Santos</strong><span class="mail-message-copy"><b>Return instructions</b>　Could you send me the next steps for a return?</span><span class="mail-time">Oct 2</span></div>
+          <div class="mail-message"><strong>Miguel Torres</strong><span class="mail-message-copy"><b>Account details update</b>　I need help changing my contact information...</span><span class="mail-time">Oct 1</span></div>
+        </div>
+      </div>
+    </template>
+
+    <template id="callback-tracker-template">
+      <div class="sample-work-preview sheet-preview">
+        <div class="sample-appbar">
+          <span class="sample-app-icon">▦</span>
+          <span class="sample-app-title">Scheduled Callback Tracker</span>
+          <span class="sample-appbar-tools"><span>File</span><span>Edit</span><span>View</span><span>Insert</span><span>Format</span></span>
+        </div>
+        <div class="sample-toolbar"><span>↶</span><span>↷</span><span>100%</span><span>Arial</span><span>10</span><span>B</span><span>▤</span><span>⋮</span></div>
+        <div class="sample-sheet-scroll">
+          <table class="sample-sheet-table">
+            <thead><tr><th>Callback #</th><th>Customer Name</th><th>Phone Number</th><th>Concern</th><th>Preferred Callback Time</th><th>Status</th><th>Notes</th><th>Date Scheduled</th></tr></thead>
+            <tbody>
+              <tr><td>CB-001</td><td>Maria Santos</td><td>0917 123 4567</td><td>Order update</td><td>Oct 1 · 10:00 AM</td><td><span class="sample-status status-complete">Completed</span></td><td>Provided tracking info</td><td>Oct 1</td></tr>
+              <tr><td>CB-002</td><td>James Reyes</td><td>0918 987 6543</td><td>Unauthorized charge</td><td>Oct 1 · 2:00 PM</td><td><span class="sample-status status-pending">Pending</span></td><td>Escalated to billing</td><td>Oct 1</td></tr>
+              <tr><td>CB-003</td><td>Liza Cruz</td><td>0920 111 2222</td><td>Subscription cancellation</td><td>Oct 2 · 11:00 AM</td><td><span class="sample-status status-complete">Completed</span></td><td>Cancelled subscription</td><td>Oct 2</td></tr>
+              <tr><td>CB-004</td><td>Ken Dela Cruz</td><td>0917 222 3333</td><td>Refund request</td><td>Oct 2 · 3:00 PM</td><td><span class="sample-status status-progress">In Progress</span></td><td>Waiting for documents</td><td>Oct 2</td></tr>
+              <tr><td>CB-005</td><td>Angelica Lim</td><td>0926 444 5555</td><td>Product inquiry</td><td>Oct 3 · 9:00 AM</td><td><span class="sample-status status-scheduled">Scheduled</span></td><td>—</td><td>Oct 3</td></tr>
+              <tr><td>CB-006</td><td>Rafael Tan</td><td>0916 777 8888</td><td>Login issue</td><td>Oct 3 · 1:00 PM</td><td><span class="sample-status status-scheduled">Scheduled</span></td><td>—</td><td>Oct 3</td></tr>
+              <tr><td>CB-007</td><td>Sophie Garcia</td><td>0908 999 0000</td><td>Wrong item received</td><td>Oct 4 · 10:00 AM</td><td><span class="sample-status status-pending">Pending</span></td><td>Need customer photos</td><td>Oct 4</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </template>
+
+    <template id="support-ticket-template">
+      <div class="sample-work-preview sheet-preview">
+        <div class="sample-appbar">
+          <span class="sample-app-icon">▦</span>
+          <span class="sample-app-title">Customer Support Ticket Tracker</span>
+          <span class="sample-appbar-tools"><span>File</span><span>Edit</span><span>View</span><span>Insert</span><span>Data</span></span>
+        </div>
+        <div class="sample-toolbar"><span>↶</span><span>↷</span><span>100%</span><span>Arial</span><span>10</span><span>B</span><span>▤</span><span>⋮</span></div>
+        <div class="sample-sheet-scroll">
+          <table class="sample-sheet-table">
+            <thead><tr><th>Ticket #</th><th>Date Received</th><th>Customer Name</th><th>Concern / Issue</th><th>Category</th><th>Priority</th><th>Status</th><th>Action Taken</th><th>Follow-up Date</th><th>Notes</th></tr></thead>
+            <tbody>
+              <tr><td>CS-001</td><td>Oct 1</td><td>Maria Santos</td><td>Order not received</td><td>Order / Delivery</td><td><span class="sample-status status-high">High</span></td><td><span class="sample-status status-resolved">Resolved</span></td><td>Tracking shared; refund issued</td><td>—</td><td>Confirmed by email</td></tr>
+              <tr><td>CS-002</td><td>Oct 1</td><td>James Reyes</td><td>Unauthorized charge</td><td>Billing</td><td><span class="sample-status status-high">High</span></td><td><span class="sample-status status-progress">In Progress</span></td><td>Verified account; escalated</td><td>Oct 5</td><td>Waiting for billing</td></tr>
+              <tr><td>CS-003</td><td>Oct 2</td><td>Liza Cruz</td><td>Subscription cancellation</td><td>Subscription</td><td><span class="sample-status status-medium">Medium</span></td><td><span class="sample-status status-resolved">Resolved</span></td><td>Cancelled and confirmed</td><td>—</td><td>No further action</td></tr>
+              <tr><td>CS-004</td><td>Oct 2</td><td>Ken Dela Cruz</td><td>Product inquiry</td><td>Product Info</td><td><span class="sample-status status-low">Low</span></td><td><span class="sample-status status-resolved">Resolved</span></td><td>Product details and link</td><td>—</td><td>Customer satisfied</td></tr>
+              <tr><td>CS-005</td><td>Oct 2</td><td>Angelica Lim</td><td>Refund request</td><td>Refund</td><td><span class="sample-status status-high">High</span></td><td><span class="sample-status status-pending">Pending</span></td><td>Gathering documents</td><td>Oct 7</td><td>Awaiting documents</td></tr>
+              <tr><td>CS-006</td><td>Oct 3</td><td>Rafael Tan</td><td>Login issue</td><td>Account</td><td><span class="sample-status status-medium">Medium</span></td><td><span class="sample-status status-resolved">Resolved</span></td><td>Password reset complete</td><td>—</td><td>Access restored</td></tr>
+              <tr><td>CS-007</td><td>Oct 4</td><td>Sophie Garcia</td><td>Wrong item received</td><td>Order / Delivery</td><td><span class="sample-status status-medium">Medium</span></td><td><span class="sample-status status-progress">In Progress</span></td><td>Requested photos</td><td>Oct 6</td><td>Waiting on warehouse</td></tr>
+              <tr><td>CS-008</td><td>Oct 4</td><td>Daniel Park</td><td>Billing question</td><td>Billing</td><td><span class="sample-status status-low">Low</span></td><td><span class="sample-status status-resolved">Resolved</span></td><td>Explained charge details</td><td>—</td><td>Receipt sent</td></tr>
+              <tr><td>CS-009</td><td>Oct 5</td><td>Paula Santos</td><td>Account deactivation</td><td>Account</td><td><span class="sample-status status-high">High</span></td><td><span class="sample-status status-progress">In Progress</span></td><td>Reviewed account history</td><td>Oct 8</td><td>Team update pending</td></tr>
+              <tr><td>CS-010</td><td>Oct 5</td><td>Miguel Torres</td><td>Payment not reflected</td><td>Billing</td><td><span class="sample-status status-medium">Medium</span></td><td><span class="sample-status status-pending">Pending</span></td><td>Checking with finance</td><td>Oct 8</td><td>Follow-up scheduled</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </template>
+
+    <template id="faq-dashboard-template">
+      <div class="faq-dashboard">
+        <div class="faq-dashboard-header">
+          <div class="faq-dashboard-brand"><span class="faq-dashboard-mark">▤</span> FAQ</div>
+          <label class="faq-search-wrap">
+            <span aria-hidden="true">⌕</span>
+            <input type="search" class="faq-search" placeholder="Search for a question..." aria-label="Search frequently asked questions" />
+          </label>
+        </div>
+        <nav class="faq-sidebar" aria-label="FAQ categories">
+          <button class="faq-category active" type="button" data-faq-category="all"><span>⌂</span> All</button>
+          <button class="faq-category" type="button" data-faq-category="orders"><span>▣</span> Orders &amp; Shipping</button>
+          <button class="faq-category" type="button" data-faq-category="returns"><span>↩</span> Returns &amp; Refunds</button>
+          <button class="faq-category" type="button" data-faq-category="subscriptions"><span>▤</span> Subscriptions</button>
+          <button class="faq-category" type="button" data-faq-category="account"><span>♙</span> Account &amp; Login</button>
+          <button class="faq-category" type="button" data-faq-category="billing"><span>▧</span> Payments &amp; Billing</button>
+          <button class="faq-category" type="button" data-faq-category="product"><span>◇</span> Product Information</button>
+          <button class="faq-category" type="button" data-faq-category="contact"><span>?</span> Contact Us</button>
+        </nav>
+        <section class="faq-content">
+          <h4>Frequently Asked Questions</h4>
+          <div class="faq-entries">
+            <article class="faq-entry" data-faq-item data-category="orders">
+              <span class="faq-entry-question">How do I track my order?</span>
+              <span class="faq-entry-answer">You can track your order by logging into your account and visiting the Order History section. You'll also receive a tracking number by email once your order ships.</span>
+              <span class="faq-entry-chevron" aria-hidden="true">›</span>
+            </article>
+            <article class="faq-entry" data-faq-item data-category="subscriptions">
+              <span class="faq-entry-question">How can I cancel my subscription?</span>
+              <span class="faq-entry-answer">To cancel your subscription, go to your account settings &gt; Subscriptions &gt; Manage. Click “Cancel Subscription” and follow the steps.</span>
+              <span class="faq-entry-chevron" aria-hidden="true">›</span>
+            </article>
+            <article class="faq-entry" data-faq-item data-category="billing">
+              <span class="faq-entry-question">What should I do if I don't recognize a charge on my account?</span>
+              <span class="faq-entry-answer">If you see a charge you don't recognize, please contact our support team immediately. We'll investigate and help resolve the issue.</span>
+              <span class="faq-entry-chevron" aria-hidden="true">›</span>
+            </article>
+            <article class="faq-entry" data-faq-item data-category="returns">
+              <span class="faq-entry-question">Can I get a refund for my order?</span>
+              <span class="faq-entry-answer">Refunds are processed within 5–7 business days after your return is received. You'll receive an email confirmation once it's processed.</span>
+              <span class="faq-entry-chevron" aria-hidden="true">›</span>
+            </article>
+            <article class="faq-entry" data-faq-item data-category="account">
+              <span class="faq-entry-question">How do I reset my password?</span>
+              <span class="faq-entry-answer">Go to the login page and click “Forgot Password.” Enter your email address and follow the instructions sent to your inbox.</span>
+              <span class="faq-entry-chevron" aria-hidden="true">›</span>
+            </article>
+            <article class="faq-entry" data-faq-item data-category="orders">
+              <span class="faq-entry-question">Do you ship internationally?</span>
+              <span class="faq-entry-answer">Yes, we offer international shipping to select countries. You can check the available destinations during checkout.</span>
+              <span class="faq-entry-chevron" aria-hidden="true">›</span>
+            </article>
+          </div>
+          <p class="faq-empty" role="status">No questions found. Try another search or category.</p>
+        </section>
+      </div>
+    </template>
+
+    <script>
+      const mobileToggle = document.querySelector('.mobile-toggle');
+      const navLinks = document.querySelector('.nav-links');
+      if (mobileToggle && navLinks) {
+        mobileToggle.addEventListener('click', () => {
+          const open = navLinks.classList.toggle('open');
+          mobileToggle.setAttribute('aria-expanded', String(open));
+        });
+
+        navLinks.querySelectorAll('a').forEach((link) => {
+          link.addEventListener('click', () => {
+            navLinks.classList.remove('open');
+            mobileToggle.setAttribute('aria-expanded', 'false');
+          });
+        });
+      }
+
+      const revealItems = document.querySelectorAll('.reveal');
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('visible');
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.14 }
+      );
+
+      revealItems.forEach((item) => observer.observe(item));
+
+      const modal = document.getElementById('portfolio-modal');
+      const modalImage = document.getElementById('modal-image');
+      const modalTitle = document.getElementById('modal-title');
+      const modalText = document.getElementById('modal-text');
+      const modalTag = document.getElementById('modal-tag');
+      const closeModalBtn = document.querySelector('.modal-close');
+      const modalDialog = document.querySelector('.modal-dialog');
+      const faqDashboardTemplate = document.getElementById('faq-dashboard-template');
+
+      document.querySelectorAll('[data-preview]').forEach((preview) => {
+        const template = document.getElementById(`${preview.dataset.preview}-template`);
+        if (!template) return;
+
+        const sample = template.content.firstElementChild.cloneNode(true);
+        sample.classList.add('compact');
+        preview.append(sample);
+      });
+
+      const modalContent = {
+        'order-tracking': {
+          title: 'Order Tracking System',
+          tag: 'Demo Project',
+          text: 'A practical sample workflow for tracking customer orders, delivery timelines, update notes, and follow-up statuses in a clear, organized support process.'
+        },
+        'customer-emails': {
+          title: 'Sample Customer Emails',
+          tag: 'Demo Project',
+          text: 'Sample professional email templates covering order updates, cancellations, follow-ups, and dispute resolution with clear customer communication.'
+        },
+        'callback-tracker': {
+          title: 'Callback Tracker',
+          tag: 'Demo Project',
+          text: 'A customer follow-up dashboard showing callback schedules, reasons, notes, and current status so service tasks remain organized and timely.'
+        },
+        'support-ticket': {
+          title: 'Customer Support Ticket Tracker',
+          tag: 'Demo Project',
+          text: 'A sample support ticket board for tracking issues, customer details, priority, team responsibility, and resolution progress.'
+        },
+        'faq': {
+          title: 'Customer Service FAQ',
+          tag: 'Demo Project',
+          text: 'A searchable help center layout containing common customer questions and polished, professional responses for support teams and customers.'
+        }
+      };
+
+      document.querySelectorAll('[data-open-modal]').forEach((button) => {
+        button.addEventListener('click', () => {
+          const key = button.getAttribute('data-open-modal');
+          const item = modalContent[key];
+          if (!item) return;
+
+          modalImage.replaceChildren();
+          modalImage.style.backgroundImage = 'none';
+          modalDialog.classList.toggle('faq-dialog', key === 'faq');
+          modalDialog.classList.toggle('work-sample-dialog', key !== 'faq');
+          if (key === 'faq') {
+            modalImage.append(faqDashboardTemplate.content.cloneNode(true));
+            setupFaqDashboard(modalImage);
+          } else {
+            const template = document.getElementById(`${key}-template`);
+            if (!template) return;
+            modalImage.append(template.content.cloneNode(true));
+          }
+          modalTitle.textContent = item.title;
+          modalText.textContent = item.text;
+          modalTag.textContent = item.tag;
+          modal.classList.add('open');
+          modal.setAttribute('aria-hidden', 'false');
+        });
+      });
+
+      function setupFaqDashboard(dashboard) {
+        const searchInput = dashboard.querySelector('.faq-search');
+        const categoryButtons = dashboard.querySelectorAll('[data-faq-category]');
+        const entries = dashboard.querySelectorAll('[data-faq-item]');
+        const emptyState = dashboard.querySelector('.faq-empty');
+        let activeCategory = 'all';
+
+        const filterEntries = () => {
+          const query = searchInput.value.trim().toLocaleLowerCase();
+          let visibleCount = 0;
+
+          entries.forEach((entry) => {
+            const matchesCategory = activeCategory === 'all' || entry.dataset.category === activeCategory;
+            const matchesQuery = entry.textContent.toLocaleLowerCase().includes(query);
+            const isVisible = matchesCategory && matchesQuery;
+            entry.hidden = !isVisible;
+            if (isVisible) visibleCount += 1;
+          });
+
+          emptyState.classList.toggle('visible', visibleCount === 0);
+        };
+
+        searchInput.addEventListener('input', filterEntries);
+        categoryButtons.forEach((categoryButton) => {
+          categoryButton.addEventListener('click', () => {
+            activeCategory = categoryButton.dataset.faqCategory;
+            categoryButtons.forEach((button) => {
+              const isActive = button === categoryButton;
+              button.classList.toggle('active', isActive);
+              button.setAttribute('aria-pressed', String(isActive));
+            });
+            filterEntries();
+          });
+          categoryButton.setAttribute('aria-pressed', String(categoryButton.dataset.faqCategory === 'all'));
+        });
+      }
+
+      const closeModal = () => {
+        modal.classList.remove('open');
+        modal.setAttribute('aria-hidden', 'true');
+      };
+
+      closeModalBtn.addEventListener('click', closeModal);
+      modal.addEventListener('click', (event) => {
+        if (event.target === modal) closeModal();
+      });
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && modal.classList.contains('open')) {
+          closeModal();
         }
       });
-    }, { threshold: 0.1 });
-
-    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-    // Contact form mock submit
-    function handleSubmit(e) {
-      e.preventDefault();
-      const msg = document.getElementById('form-msg');
-      msg.style.display = 'block';
-      e.target.reset();
-      setTimeout(() => { msg.style.display = 'none'; }, 4000);
-    }
-  </script>
-
-</body>
+    </script>
+  </body>
 </html>
